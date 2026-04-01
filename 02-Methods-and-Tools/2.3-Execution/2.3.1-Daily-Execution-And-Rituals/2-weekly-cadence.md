@@ -197,6 +197,11 @@ Decision: [Choose one and execute]
 - [What worked well]
 - [What didn't work]
 
+### SECOND-ORDER THINKING 🎯
+- **What did I predict this week that I can check later?** (stakeholder reaction, decision outcome, whether something would go wrong) — log with explicit confidence: high / medium / low
+- **What would I do differently in hindsight?** (one honest thing, even if small)
+- **What surprised me that I didn't see coming?** (the signal I missed — worth naming)
+
 ### CARRIED OVER 📦
 - [What's moving to next week]
 - [Why it didn't get done]

@@ -1,8 +1,67 @@
 # PM Brain – Architecture Overview
 
-**What this file is:** Short visual reference for repo structure and methods flow. **This is documentation for humans (and for agents when they need a system overview); it is not executed behavior.** Executed behavior lives in [ORCHESTRATION.md](ORCHESTRATION.md). For full navigation: [README.md](README.md), [AGENTS.md](AGENTS.md), [ORCHESTRATION.md](ORCHESTRATION.md), [MEMORY.md](MEMORY.md). For a short reference summary (not loaded by the agent): [agent-manifest.md](agent-manifest.md). For product thinking: [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md). For “I need a template”: [0-template-finder.md](02-Methods-and-Tools/0-template-finder.md). For “everything about topic X”: [1-frameworks-by-topic.md](02-Methods-and-Tools/1-frameworks-by-topic.md). For evals (methods + agent behavior): [.cursor/evals/README.md](.cursor/evals/README.md).
+**What this file is:** Short visual reference for repo structure and methods flow. **This is documentation for humans (and for agents when they need a system overview); it is not executed behavior.** Executed behavior lives in [ORCHESTRATION.md](..\/ORCHESTRATION.md). For full navigation: [README.md](..\/README.md), [AGENTS.md](..\/AGENTS.md), [ORCHESTRATION.md](..\/ORCHESTRATION.md), [MEMORY.md](..\/MEMORY.md). For a short reference summary (not loaded by the agent): [agent-manifest.md](agent-manifest.md). For product thinking: [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md). For “I need a template”: [0-template-finder.md](..\/02-Methods-and-Tools/0-template-finder.md). For “everything about topic X”: [1-frameworks-by-topic.md](..\/02-Methods-and-Tools/1-frameworks-by-topic.md). For evals (methods + agent behavior): [.cursor/evals/README.md](..\/.cursor/evals/README.md).
 
-**Cursor preview:** The built-in Markdown preview in Cursor (and VS Code) does not render Mermaid diagrams by default. To see flowcharts and diagrams in preview, install a Mermaid-capable extension (e.g. **Markdown Preview Mermaid Support** or **Mermaid Preview** from the Extensions view). Diagrams in this file also render on GitHub and in online Mermaid editors.
+**Preview:** The built-in Markdown preview in Cursor (and VS Code) does not render Mermaid diagrams by default. To see flowcharts and diagrams in preview, install a Mermaid-capable extension (e.g. **Markdown Preview Mermaid Support** or **Mermaid Preview** from the Extensions view). Diagrams in this file also render on GitHub and in online Mermaid editors.
+
+---
+
+## At a glance
+
+Two diagrams that explain the whole system. Useful for onboarding someone new or explaining what this is.
+
+**What PM Brain is — structure:**
+
+```mermaid
+graph TB
+    subgraph repo["PM Brain — git-versioned Personal PM Operating System"]
+        subgraph kb["Knowledge Base"]
+            A["00-Meta<br/>Learning log · Forecasts · Daily tracking"]
+            B["01-Company Context<br/>Vision · Strategy · Stakeholders · Org politics"]
+            C["02-Methods & Tools<br/>Frameworks · Templates · Evaluations"]
+            D["03-Research<br/>User interviews · Insights · Evidence"]
+            E["04-Initiatives<br/>Active bets — one folder per initiative"]
+        end
+        subgraph ai["AI Coaching Layer"]
+            BOOT["Always-on Bootstrap<br/>Persona · Routing rules · Voice · Thinking style"]
+            MEM["Sleeping Memory<br/>Loaded on demand when conversation touches that area"]
+        end
+    end
+
+    PM(("You<br/>PM")) --> BOOT
+    C -->|"always available"| BOOT
+    B --> MEM
+    D --> MEM
+    E --> MEM
+    MEM -.->|"woken on demand"| BOOT
+    BOOT --> OUT["Artifacts<br/>PRDs · OKRs · Roadmaps<br/>Decision memos · One-pagers"]
+```
+
+**How a coaching session flows:**
+
+```mermaid
+flowchart TD
+    MSG["You send a message"] --> ROUTE{What kind of topic?}
+
+    ROUTE -->|"Thinking through a decision<br/>strategy · discovery · prioritization · politics"| PS["Guided Braindump<br/>product_sense mode"]
+    ROUTE -->|"Explicit doc request<br/>Write PRD · create OKR · draft roadmap"| TF["Template-finder path<br/>execution mode"]
+    ROUTE -->|"General question<br/>or navigation"| CONV["Conversation mode<br/>straight answer"]
+
+    PS --> Q["3-5 hard questions per batch<br/>Challenge assumptions · Uncover risks<br/>Surface uncomfortable truths"]
+    Q --> BR{Braindump<br/>sufficient?}
+    BR -->|"Not yet"| Q
+    BR -->|"Yes — assumptions named,<br/>risks surfaced, one uncomfortable thought"| EM
+
+    TF --> PRE["2-3 preflight prompts<br/>Why this? Why now?<br/>Know vs. guess?"]
+    PRE --> EM["Match framework<br/>from 02-Methods-and-Tools"]
+
+    EM --> FWORK["Apply framework step-by-step<br/>anchor in your actual context"]
+    FWORK --> ART["Produce artifact<br/>PRD · OKR · Roadmap · Decision memo"]
+    ART --> EVAL["Quality check<br/>3-star evaluation"]
+    EVAL --> LOG["Log decision + learning<br/>meta_reflection"]
+```
+
+**The short pitch:** A personal PM knowledge base with a built-in thinking coach. Every conversation is grounded in your actual company context, uses a curated library of PM frameworks, and pushes you to think clearly before producing polished docs.
 
 ---
 
@@ -12,15 +71,15 @@ This section documents **why** the repo is structured this way. Use it when eval
 
 ### Root file policy
 
-- **Root is reserved for:** (a) files AI platforms expect at root by convention (AGENTS.md, CLAUDE.md), (b) core orchestration the agent loads at startup (ORCHESTRATION.md, MEMORY.md, version.json), and (c) Layer 2 specs loaded on-demand (PRODUCT-SENSE-RULES.md).
+- **Root is reserved for:** (a) files AI platforms expect at root by convention (AGENTS.md, CLAUDE.md), (b) core orchestration the agent loads at startup (ORCHESTRATION.md, MEMORY.md), (c) Layer 2 specs loaded on-demand (PRODUCT-SENSE-RULES.md), and (d) project metadata not loaded at startup (version.json).
 - **Human documentation** goes in `docs/`, not at root.
 - Adding a new root file requires justification against these criteria.
 
 ### Loading layer rationale
 
-- **Layer 1** (always loaded) MUST stay under ~100 lines total — this is the context budget for every conversation regardless of topic.
+- **Layer 1** (bootstrap) is the 5-file set loaded unconditionally at conversation start. Keep it as lean as possible — every line here costs context on every conversation regardless of topic.
 - A file belongs in Layer 1 only if the agent needs it on **every** turn. Everything else is Layer 2+ (on-demand).
-- Example: PRODUCT-SENSE-RULES.md (445 lines) is Layer 2 because it is only needed in product_sense state — putting it in Layer 1 would waste context on every non-product conversation.
+- Example: PRODUCT-SENSE-RULES.md is Layer 2 because it is only needed in product_sense state — putting it in Layer 1 would waste context on every non-product conversation.
 
 ### Separation of concerns
 
@@ -37,6 +96,19 @@ This section documents **why** the repo is structured this way. Use it when eval
 - Platform-specific paths are routed through MEMORY.md, never hardcoded in AGENTS.md or ORCHESTRATION.md.
 - Any structural change must work on Cursor **and** Claude Code without extra configuration.
 
+### Platform-specific wiring
+
+Each platform has a different auto-load mechanism. The CONTENT is shared (same rules, same persona, same orchestration), but the WIRING — how that content gets into the agent's context — is platform-specific. Don't try to make one folder or one file serve all platforms; instead, create the entry point each platform needs and point it at the shared content.
+
+| Platform | Entry point | What it does |
+|----------|------------|-------------|
+| **Cursor** | `.cursor/rules/*.mdc` | Auto-injects rules into every conversation. No read step needed. |
+| **VS Code + Copilot** | `.github/copilot-instructions.md` | Auto-loads as system prompt; instructs agent to read shared bootstrap files. |
+| **Claude Code** | `CLAUDE.md` | Auto-discovered by Claude; contains manual setup checklist pointing at shared files. |
+| **ChatGPT / Claude.ai** | None (manual) | User pastes bootstrap context; see `docs/platform-setup.md`. |
+
+**Principle:** One content set, platform-specific wiring. When adding a new rule or changing agent behavior, update the CONTENT (shared files). When supporting a new platform, create a new ENTRY POINT that wires to the same content. Don't duplicate content across entry points — except for critical guardrails (like the golden rule) that must survive even if the bootstrap is skipped.
+
 ### Structural "do nots"
 
 - Do **not** create JSON manifests duplicating the filesystem (they go stale).
@@ -49,57 +121,10 @@ This section documents **why** the repo is structured this way. Use it when eval
 - **Root:** UPPERCASE for agent/core and former human docs (AGENTS.md, ORCHESTRATION.md, …); README.md; version.json lowercase. New human docs go in `docs/` as lowercase.
 - **docs/:** lowercase hyphenated (setup.md, guidelines.md, architecture.md, credits.md, agent-manifest.md).
 - **02-Methods-and-Tools:** README.md plus `N-name-with-hyphens.md` (number prefix, lowercase).
-- **01-Company-Context:** Entry/setup UPPERCASE (CONTEXT.md, SETUP.md); content number-lowercase (1-company-vision.md, …).
+- **01-Company-Context:** Entry UPPERCASE (CONTEXT.md, CONTEXT-HEALTH.md); content number-lowercase (1-company-vision.md, …). Setup guide lives in `docs/setup.md`.
 - **04-Initiatives:** lowercase (summary.md, prd.md, opportunity-assessment.md, …).
 - **00-Meta:** Content lowercase; entry/guide docs may stay UPPERCASE. No UPPERCASE in otherwise lowercase folders — fix outliers.
 - **.cursor:** lowercase hyphenated for rules/skills (voice.mdc, product-sense.mdc).
-
----
-
-## Orchestration and sleeping memory
-
-**Orchestration:** All agent routing, state transitions, and context-loading logic live in [ORCHESTRATION.md](ORCHESTRATION.md). The agent reads ORCHESTRATION.md (and [AGENTS.md](AGENTS.md) for persona) to decide what to do each turn. State is inferred from the conversation; there is no persistent state store.
-
-**Sleeping memory:** Content in 01-Company-Context, 03-Research-Artifacts, 04-Initiatives, and .cursor (rules, skills) is **sleeping memory** until the conversation needs it. [MEMORY.md](MEMORY.md) is the **sleeping memory manifest**: it lists what exists where and **when to wake** each area (company context, initiatives, research, rules, skills). The agent uses MEMORY.md to choose what to load when the user mentions strategy, an initiative, research, or personalization.
-
-**Architecture (core, content on-demand, sleeping memory):**
-
-```mermaid
-flowchart TB
-  subgraph Core["Core (agent + orchestration)"]
-    V[version.json]
-    A[AGENTS.md]
-    O[ORCHESTRATION.md]
-    V --> A --> O
-  end
-
-  subgraph Content["Content (frameworks & prompts)"]
-    PSR[PRODUCT-SENSE-RULES.md]
-    PROM[2-product-sense-prompts.md]
-    ENTRY[0-start-here...]
-    EVAL[eval-functions.md]
-    FW[1-*-framework.md]
-  end
-
-  subgraph Memory["Sleeping memory & context"]
-    MEM[MEMORY.md]
-    C01[01-Company-Context]
-    C03[03-Research-Artifacts]
-    C04[04-Initiatives]
-    Rules[.cursor/rules]
-    Skills[.cursor/skills]
-    MEM --> C01
-    MEM --> C03
-    MEM --> C04
-    MEM --> Rules
-    MEM --> Skills
-  end
-
-  O --> Content
-  O --> Memory
-```
-
-ORCHESTRATION drives both **content on-demand** (Layer 2 by state: product_sense → entry point, prompts, eval-functions; execution_mode → template-finder or framework guide) and **sleeping memory** (when the user mentions company, initiative, or research, consult MEMORY.md and load the relevant paths).
 
 ---
 
@@ -109,11 +134,14 @@ High-level flow: the agent loads a small core at conversation start, infers stat
 
 ```mermaid
 flowchart TB
-  subgraph Startup["On conversation start"]
-    V2[version.json]
+  subgraph Startup["On conversation start (bootstrap)"]
     A2[AGENTS.md]
     O2[ORCHESTRATION.md]
-    V2 --> A2 --> O2
+    Voice2[voice.mdc]
+    Think2[thinking.mdc]
+    Personal2[thinking.personal.mdc]
+    A2 --> O2
+    Voice2 --- Think2 --- Personal2
   end
 
   subgraph Turn["Each turn"]
@@ -143,9 +171,10 @@ flowchart TB
 ```
 
 **In words:**
-- **Start:** Agent reads version.json → AGENTS.md (persona) → ORCHESTRATION.md (routing and modes). No other files are loaded yet.
-- **Each turn:** Your message is matched against ORCHESTRATION’s decision tree → one mode is chosen (product_sense, execution_mode, meta_reflection, or conversation). The agent then loads only the Layer 2 files for that mode (e.g. 0-start-here + prompts for product_sense; template-finder + framework for execution_mode).
-- **Sleeping memory:** 01-Company-Context, 03-Research-Artifacts, 04-Initiatives, and .cursor (rules, skills) are **not** in the prompt until the conversation touches them. When you mention strategy, an initiative, or research, the agent consults MEMORY.md and loads the relevant paths. This keeps the prompt small and focused.
+- **Start (bootstrap):** Agent reads the 5-file bootstrap set: AGENTS.md (persona), ORCHESTRATION.md (routing and modes), voice.mdc (communication style), thinking.mdc (coaching behavior), and thinking.personal.mdc (personal context). No other files are loaded yet.
+- **Each turn:** Your message is matched against ORCHESTRATION's decision tree → one mode is chosen (product_sense, execution_mode, meta_reflection, or conversation). The agent then loads only the Layer 2 files for that mode (e.g. 0-start-here + prompts for product_sense; template-finder + framework for execution_mode).
+- **Cross-cutting behaviors:** Some rules fire in ANY state, regardless of mode: the Product Judgment Test capture trigger (decision with confidence → offer PJT), intent disambiguation (clarify ambiguous topic signals before loading), and the company context routing guard (check CONTEXT-HEALTH.md before suggesting updates to company docs).
+- **Sleeping memory:** 01-Company-Context, 03-Research-Artifacts, 04-Initiatives, and .cursor (conditional rules, skills) are **not** in the prompt until the conversation touches them. When you mention strategy, an initiative, or research, the agent consults MEMORY.md and loads the relevant paths. This keeps the prompt small and focused.
 
 ---
 
@@ -235,19 +264,29 @@ flowchart LR
   Meta -->|"suggest 00-Meta log or rule update"| Conversation
 ```
 
-- **conversation** (default): General questions, navigation, non-product topics. When the user message matches product or doc-request triggers, re-route using the decision tree in [ORCHESTRATION.md](ORCHESTRATION.md).
+- **conversation** (default): General questions, navigation, non-product topics. When the user message matches product or doc-request triggers, re-route using the decision tree in [ORCHESTRATION.md](..\/ORCHESTRATION.md).
 - **product_sense**: Entered when the topic is product/stakeholder/organization/strategy/roadmap/prioritization/discovery/execution or "help me think through something". Stay here while you braindump using prompts from `2-product-sense-prompts.md` and the golden rule in `PRODUCT-SENSE-RULES.md`, until the "braindump sufficient" checklist is met.
-- **Template finder path** (entry into execution_mode): When you ask to write/draft/fill a specific doc (PRD, OKR, one-pager, etc.), use [0-template-finder.md](02-Methods-and-Tools/0-template-finder.md) to jump to the right README + template, with 1–2 preflight prompts for non-trivial docs.
+- **Template finder path** (entry into execution_mode): When you ask to write/draft/fill a specific doc (PRD, OKR, one-pager, etc.), use [0-template-finder.md](..\/02-Methods-and-Tools/0-template-finder.md) to jump to the right README + template, with 1–2 preflight prompts for non-trivial docs.
 - **execution_mode**: After sufficient braindump (or via template-finder path), help structure thinking and apply the right framework/template from `02-Methods-and-Tools/`.
-- **meta_reflection**: After substantial decision work, suggest logging in `00-Meta/` (forecast log, learning log, pattern recognition), optionally running the Level 2 checklist ([.cursor/evals/1-agent-behavior-guide.md](.cursor/evals/1-agent-behavior-guide.md)), and optionally updating rules (see `.cursor/rules/thinking.mdc`). Exit → return to **conversation**.
+- **meta_reflection**: After substantial decision work, suggest logging in `00-Meta/` (forecast log, learning log, pattern recognition), optionally running the Level 2 checklist ([.cursor/evals/1-agent-behavior-guide.md](..\/.cursor/evals/1-agent-behavior-guide.md)), and optionally updating rules (see `.cursor/rules/thinking.mdc`). Exit → return to **conversation**.
 
 **Evals** are a separate workflow (see Evaluation system below), not a conversation mode. The agent may suggest the Level 2 checklist in meta_reflection; you run evals when you choose.
 
 ---
 
+## Cross-cutting behaviors (fire in any state)
+
+Some agent behaviors are **unconditional** — they fire regardless of which mode the agent is in. These are defined in [ORCHESTRATION.md](..\/ORCHESTRATION.md) → Cross-Cutting Behaviors:
+
+- **Product Judgment Test capture:** Any time a decision is captured with an explicit confidence level (anywhere, any state), the agent immediately offers to log it in the [Product Judgment Test](..\/00-Meta/0.3-Product-Judgment-Test/forecast-log.md). This is hardcoded, not a judgment call.
+- **Intent disambiguation:** When a topic signal is ambiguous (e.g. "roadmap" could mean "load company roadmap" or "help me build a roadmap"), the agent states its interpretation and checks before loading — one brief confirmation, not an interrogation.
+- **Company context routing guard:** Before suggesting an update to any numbered company context doc, the agent checks [CONTEXT-HEALTH.md](..\/01-Company-Context/CONTEXT-HEALTH.md) for its Maintained/Reference/External status. Reference or External docs route findings to initiative context instead. Stakeholder Avatars are always Maintained.
+
+---
+
 ## Evaluation system (evals)
 
-Evals are **guidance-based** (no scripts). Two levels: (1) **Level 1** = artifact quality (methods/frameworks) — lives in `02-Methods-and-Tools/` (Quick Quality Checks in `1-*-framework.md`, full review in `3-*-evaluation.md`); (2) **Level 2** = agent behavior — lives in `.cursor/evals/` ([1-agent-behavior-guide.md](.cursor/evals/1-agent-behavior-guide.md), [2-checklist.md](.cursor/evals/2-checklist.md), [agent-behavior-scenarios.json](.cursor/evals/agent-behavior-scenarios.json), [`test-generator.md`](.cursor/evals/test-generator.md), and seeded tests in `eval-results/`). You run evals when it matters; when you learn something new, you update the right file (see "Where to update" in the evals guide).
+Evals are **guidance-based** (no scripts). Two levels: (1) **Level 1** = artifact quality (methods/frameworks) — lives in `02-Methods-and-Tools/` (Quick Quality Checks in `1-*-framework.md`, full review in `3-*-evaluation.md`); (2) **Level 2** = agent behavior — lives in `.cursor/evals/` ([1-agent-behavior-guide.md](..\/.cursor/evals/1-agent-behavior-guide.md), [2-checklist.md](..\/.cursor/evals/2-checklist.md), [agent-behavior-scenarios.json](..\/.cursor/evals/agent-behavior-scenarios.json), [`test-generator.md`](..\/.cursor/evals/test-generator.md), and seeded tests in `eval-results/`). You run evals when it matters; when you learn something new, you update the right file (see "Where to update" in the evals guide).
 
 **How evals are used (visual):**
 
@@ -276,9 +315,9 @@ flowchart TB
 ```
 
 - **Level 1 during creation:** The agent uses Quick Quality Checks automatically per `.cursor/rules/evaluation-orchestration.mdc` when you work on frameworks with evaluation support (PRD, Opportunity Assessment, North Star, One-Pager, OKR, Roadmap).
-- **Level 2:** You (or an AI with the pasteable prompt) run the checklist when you choose; the agent may suggest it after substantial conversations (see [AGENTS.md](AGENTS.md), [ORCHESTRATION.md](ORCHESTRATION.md) → meta_reflection). Scenarios in JSON are reference only—you match your conversation to a scenario type and use success_indicators / failure_modes to score; the agent does not read the JSON. [`test-generator.md`](.cursor/evals/test-generator.md) and `eval-results/test-*-*.md` files give you a library of concrete test conversations.
-- **Entry point:** [.cursor/evals/README.md](.cursor/evals/README.md) — intro, separation of evals, how it learns / ask user to adapt, pasteable prompts, file map.
-- **Behavior logging and pattern detection:** For optional instrumentation hooks and log format, see [eval-functions.md](.cursor/evals/eval-functions.md), [eval-results/README.md](.cursor/evals/eval-results/README.md), and the post-conversation hook `.cursor/hooks/log-eval.js` (currently disabled in `.cursor/hooks.json`; re-enable when the hook payload is fixed). These enable tracking agent behavior over time for pattern detection (non-blocking).
+- **Level 2:** You (or an AI with the pasteable prompt) run the checklist when you choose; the agent may suggest it after substantial conversations (see [AGENTS.md](..\/AGENTS.md), [ORCHESTRATION.md](..\/ORCHESTRATION.md) → meta_reflection). Scenarios in JSON are reference only—you match your conversation to a scenario type and use success_indicators / failure_modes to score; the agent does not read the JSON. [`test-generator.md`](..\/.cursor/evals/test-generator.md) and `eval-results/test-*-*.md` files give you a library of concrete test conversations.
+- **Entry point:** [.cursor/evals/README.md](..\/.cursor/evals/README.md) — intro, separation of evals, how it learns / ask user to adapt, pasteable prompts, file map.
+- **Behavior logging and pattern detection:** For optional instrumentation hooks and log format, see [eval-functions.md](..\/.cursor/evals/eval-functions.md), [eval-results/README.md](..\/.cursor/evals/eval-results/README.md), and the post-conversation hook `.cursor/hooks/log-eval.js` (currently disabled in `.cursor/hooks.json`; re-enable when the hook payload is fixed). These enable tracking agent behavior over time for pattern detection (non-blocking).
 
 ---
 
@@ -290,13 +329,13 @@ The repo has a few main entry points. Depending on what you're doing, the agent 
 
 | I want to... | Go to |
 |--------------|-------|
-| **Think through a product decision** | [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) — braindump first, then frameworks |
-| **I know the doc I need** (PRD, OKR, roadmap, etc.) | [0-template-finder.md](02-Methods-and-Tools/0-template-finder.md) — jump straight to template |
+| **Think through a product decision** | [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) — braindump first, then frameworks |
+| **I know the doc I need** (PRD, OKR, roadmap, etc.) | [0-template-finder.md](..\/02-Methods-and-Tools/0-template-finder.md) — jump straight to template |
 | **Understand the system architecture** | [architecture.md](architecture.md) — visual overview, flows, context management |
-| **Configure the agent / orchestration** | [AGENTS.md](AGENTS.md) — persona; [ORCHESTRATION.md](ORCHESTRATION.md) — routing, states, loading; [MEMORY.md](MEMORY.md) — sleeping memory manifest. *These are what the agent loads.* |
+| **Configure the agent / orchestration** | [AGENTS.md](..\/AGENTS.md) — persona; [ORCHESTRATION.md](..\/ORCHESTRATION.md) — routing, states, loading; [MEMORY.md](..\/MEMORY.md) — sleeping memory manifest. *These are what the agent loads.* |
 | **Quick reference** (not loaded by agent) | [agent-manifest.md](agent-manifest.md) — summary of entrypoints, states, and content clusters; for humans and maintainers only |
-| **Run evals** (artifact quality or agent behavior) | [.cursor/evals/README.md](.cursor/evals/README.md) — Level 1 (methods) or Level 2 (agent behavior) |
-| **Set up for the first time** | [01-Company-Context/SETUP.md](01-Company-Context/SETUP.md) — company context, agent config, optional 00-Meta setup |
+| **Run evals** (artifact quality or agent behavior) | [.cursor/evals/README.md](..\/.cursor/evals/README.md) — Level 1 (methods) or Level 2 (agent behavior) |
+| **Set up for the first time** | [docs/setup.md](setup.md) — company context, agent config, optional 00-Meta setup |
 
 ```mermaid
 flowchart LR
@@ -325,9 +364,9 @@ flowchart LR
 
 | Entry point | Trigger | Where it leads |
 |-------------|---------|----------------|
-| **Product thinking** | You're braindumping, exploring, or asking for help with a decision | [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) → product_sense → then [02-Methods-and-Tools/](02-Methods-and-Tools/README.md) (framework/template). After substantial work, agent may suggest [00-Meta/](00-Meta/README.md) (log, forecast, learning). |
-| **Template finder** | You ask to write/draft/fill a specific doc (PRD, OKR, one-pager, etc.) | [0-template-finder.md](02-Methods-and-Tools/0-template-finder.md) → right README + template in 02-Methods-and-Tools. For frameworks with evaluation support, agent uses Quick Quality Checks ([evaluation-orchestration.mdc](.cursor/rules/evaluation-orchestration.mdc)). |
-| **Evals** | You want to review artifact quality or agent behavior | [.cursor/evals/README.md](.cursor/evals/README.md) → Level 1 (Methods) or Level 2 (agent-behavior guide, checklist, scenarios as reference). Agent may suggest Level 2 checklist after substantial conversations (meta_reflection). |
+| **Product thinking** | You're braindumping, exploring, or asking for help with a decision | [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) → product_sense → then [02-Methods-and-Tools/](..\/02-Methods-and-Tools/README.md) (framework/template). After substantial work, agent may suggest [00-Meta/](..\/00-Meta/README.md) (log, forecast, learning). |
+| **Template finder** | You ask to write/draft/fill a specific doc (PRD, OKR, one-pager, etc.) | [0-template-finder.md](..\/02-Methods-and-Tools/0-template-finder.md) → right README + template in 02-Methods-and-Tools. For frameworks with evaluation support, agent uses Quick Quality Checks ([evaluation-orchestration.mdc](..\/.cursor/rules/evaluation-orchestration.mdc)). |
+| **Evals** | You want to review artifact quality or agent behavior | [.cursor/evals/README.md](..\/.cursor/evals/README.md) → Level 1 (Methods) or Level 2 (agent-behavior guide, checklist, scenarios as reference). Agent may suggest Level 2 checklist after substantial conversations (meta_reflection). |
 
 ---
 
@@ -354,16 +393,18 @@ This keeps agent-facing instructions visible first when the file is loaded; huma
 
 ## Context Management Strategy
 
-The agent needs to load different files at different times to stay within context limits. **Definitive loading logic:** See [ORCHESTRATION.md](ORCHESTRATION.md) → Context Loading Strategy and [MEMORY.md](MEMORY.md) for when to wake sleeping memory. The summary below is for human reference.
+The agent loads different files at different times to stay within context limits. **Definitive loading logic:** [ORCHESTRATION.md](..\/ORCHESTRATION.md) → Context Loading Strategy. **Sleeping memory manifest:** [MEMORY.md](..\/MEMORY.md).
 
 **Visual (what gets loaded when):**
 
 ```mermaid
 flowchart LR
-  subgraph L1core["Layer 1 - Always"]
+  subgraph L1core["Layer 1 - Always (bootstrap)"]
     L1A[AGENTS.md]
     L1O[ORCHESTRATION.md]
-    L1V[version.json]
+    L1Voice[voice.mdc]
+    L1Think[thinking.mdc]
+    L1Personal[thinking.personal.mdc]
   end
 
   subgraph L2on["Layer 2 - By mode"]
@@ -387,103 +428,22 @@ flowchart LR
   L1core -.->|"Trigger: company / initiative / research"| Wake
 ```
 
-*The "wake" trigger comes from the user message (e.g. they mention strategy or an initiative); the agent then consults MEMORY.md and loads the relevant paths.*
+**Three layers, short version:**
+- **Layer 1 (bootstrap):** 5 files loaded unconditionally at conversation start (AGENTS, ORCHESTRATION, voice, thinking, thinking.personal). No response before these are loaded. Platform wiring determines how (see Design Principles → Platform-specific wiring above).
+- **Layer 2 (by mode):** Loaded when a mode is entered — product_sense gets entry point + prompts + eval-functions; execution_mode gets template-finder or framework guide.
+- **Layer 3 (reference):** Templates (`2-*-template.md`) and evaluations (`3-*-evaluation.md`) loaded only when actively filling or checking.
+- **Sleeping memory:** Company context, research, initiatives, conditional rules (`.cursor/rules/`), and skills (`.cursor/skills/`) load only when the conversation touches that area — triggered by user message, routed via MEMORY.md.
 
-**Solution:** Three-layer loading strategy:
-
-### Layer 1: Core (Always Loaded)
-
-**What:** Essential instructions that govern agent behavior.
-
-**Files:**
-- [AGENTS.md](AGENTS.md) (persona + pointer to ORCHESTRATION)
-- [ORCHESTRATION.md](ORCHESTRATION.md) (routing, states, loading)
-- [version.json](version.json)
-
-**Total:** ~80 lines
-
-**When:** Always loaded at conversation start.
-
-### Layer 2: On-Demand (Loaded When Needed)
-
-**What:** Framework guides and prompts needed for current mode.
-
-**Files loaded in product_sense:**
-- Entry point: [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) (persona section + workflow, ~100 lines)
-- Prompts file: [2-product-sense-prompts.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/2-product-sense-prompts.md) (relevant situation section, ~50-100 lines)
-- Eval functions: eval-functions.md (checkpoint definitions, ~50 lines; see [MEMORY.md](MEMORY.md) → Evals for path)
-
-**Files loaded in execution_mode:**
-- Framework guide: `1-*-framework.md` for the framework being used (~100-200 lines)
-- Template finder: [0-template-finder.md](02-Methods-and-Tools/0-template-finder.md) (if user asked for specific doc, ~30 lines)
-
-**Total per mode:** ~200-350 lines
-
-**When:** Loaded when user enters a mode or asks for a specific framework.
-
-### Layer 3: Reference (Loaded Only When Filling/Checking)
-
-**What:** Templates, evaluation criteria, and detailed guides.
-
-**Files:**
-- Templates: `2-*-template.md` (only when user is filling template, ~50-100 lines)
-- Evaluation: `3-*-evaluation.md` (only when doing quality check, ~100-200 lines)
-- Detailed guides: Full framework files (only when user needs deep dive)
-
-**Total:** Variable, loaded on-demand
-
-**When:** Loaded only when user is actively using them (filling template, running evaluation).
-
-### Loading Order
-
-1. **Conversation start:** Load Layer 1 (Core)
-2. **User in product_sense:** Load Layer 2 (On-demand) → entry point + prompts
-3. **User in execution_mode:** Load Layer 2 (On-demand) → framework guide
-4. **User fills template:** Load Layer 3 (Reference) → template file
-5. **User requests evaluation:** Load Layer 3 (Reference) → evaluation file
-
-### Context Limits
-
-**Estimated usage:**
-- Layer 1 (Core): ~80 lines
-- Layer 2 (On-demand): ~200-350 lines
-- Layer 3 (Reference): ~50-200 lines (when needed)
-- Conversation history: Variable
-
-**Total typical usage:** ~330-630 lines + conversation history
-
-**Strategy:** Keep Layer 1 minimal. Load Layer 2 only for current mode. Load Layer 3 only when actively using.
-
-### Implementation Notes
-
-**For agents:** See [ORCHESTRATION.md](ORCHESTRATION.md) for the definitive loading strategy; this section is a summary. Don't load all frameworks at once. Load only what's needed for the current mode and task.
+For the full file-by-file loading table, see [ORCHESTRATION.md](..\/ORCHESTRATION.md) → Context Loading Rules.
 
 **For framework authors:** Keep framework guides focused. Put detailed examples in separate files. Keep "For Agents" sections concise.
 
-**For system maintainers:** Monitor context usage. If Layer 1 grows beyond ~100 lines, consider splitting into core vs. extended instructions.
-
 ### Context Health (Preventing Rot)
 
-Long conversations degrade quality as context fills up. The agent uses heuristic triggers (heavy context loaded, state transitions, ~25-30 turn ceiling) to offer **checkpoints** — saving session state to `checkpoints/session-*.md` so the user can continue in a fresh conversation. Re-anchoring happens silently at state transitions. Full protocol: [ORCHESTRATION.md](ORCHESTRATION.md) → Context Health.
+Long conversations degrade quality as context fills up. The agent uses heuristic triggers (heavy context loaded, state transitions, ~25-30 turn ceiling) to offer **checkpoints** — saving session state to `checkpoints/session-*.md` so the user can continue in a fresh conversation. Re-anchoring happens silently at state transitions. Full protocol: [ORCHESTRATION.md](..\/ORCHESTRATION.md) → Context Health.
 
 ---
 
 ## Version Management
 
-**Version tracking:** The repository uses semantic versioning tracked in `version.json` (repo root). This enables agents to detect major structural changes and helps coordinate with GitHub releases.
-
-**When to update version.json:**
-
-- **MAJOR version** (e.g., 1.0.0 → 2.0.0): Breaking changes to `AGENTS.md` (mode definitions, eval checkpoints, core behavior), `docs/architecture.md` (structure changes, new layers), framework structure changes, or "For Agents" convention changes.
-- **MINOR version** (e.g., 1.0.0 → 1.1.0): New frameworks added, new rules or skills added, significant new documentation (new entry points, major sections), or eval system enhancements.
-- **PATCH version** (e.g., 1.0.0 → 1.0.1): Typically not tracked for this knowledge base (bug fixes and clarifications don't require version bumps).
-
-**Update process:**
-1. Make the structural change
-2. Update `version.json`: bump version, add changelog entry, update `lastUpdated` timestamp, update `structure` snapshot if counts changed
-3. Commit `version.json` with the changes that triggered it
-4. **Optional:** Create GitHub release with tag matching version (e.g., `v1.0.0`) and copy changelog entry to release notes
-
-**GitHub releases:** If using GitHub releases, tag them with the same version as `version.json` (e.g., `v1.0.0`). The release notes can reference the changelog entry from `version.json`. This keeps releases and `version.json` in sync.
-
-**For agents:** See [ORCHESTRATION.md](ORCHESTRATION.md) → Version Management and [AGENTS.md](AGENTS.md) → Version Checking for how agents use `version.json` to detect changes.
+Version tracking uses semantic versioning in `version.json` (repo root). See [guidelines.md](guidelines.md) → Version Management for when and how to update. `version.json` is **sleeping memory** — not loaded at bootstrap. The agent wakes it on demand when the user asks about version or recent changes, or when bumping after structural work. See [ORCHESTRATION.md](../ORCHESTRATION.md) → Version Management.

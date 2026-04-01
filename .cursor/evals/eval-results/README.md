@@ -6,62 +6,83 @@
 
 ---
 
-## Log File Format
+## Canonical Eval Log Format
 
-Create one log file per conversation or eval session. Use this format:
+Every eval result file MUST follow this structure. Use this template for new evals. Sections are in fixed order — include all of them, even if a section is "N/A" or brief.
 
 ```markdown
-# Eval Log - [Date] - [Conversation ID or Brief Description]
+# Eval Log — [YYYY-MM-DD] — [Brief Description]
 
-**Date:** YYYY-MM-DD  
-**Conversation Type:** [product_sense / execution_mode / template_finder]  
-**User Request:** [Brief description of what user asked]
+**Date:** YYYY-MM-DD
+**Conversation Type:** [product_sense / execution_mode / meta_reflection / mixed — list transitions]
+**User Request:** [Brief description of what the user asked]
+**Platform:** [VS Code + GitHub Copilot / Cursor / Claude Code / other]
+
+---
 
 ## Scenario Matched
-- Type: [scenario_id from agent-behavior-scenarios.json]
-- Initial prompt: "[user's initial request]"
 
-## Checkpoints
+[Which scenario_id from agent-behavior-scenarios.json best matches? If none, note "no exact match" and name the closest analog + whether a new scenario should be added.]
 
-### Entry (product_sense)
-- ✅/❌ Persona adopted
-- ✅/❌ Context check asked
-- ✅/❌ No framework in first message
-- Questions asked before framework: [count]
+---
 
-### Braindump Loop
-- Questions asked: [count]
-- Question quality: [High/Medium/Low]
-- Braindump depth: [Deep/Medium/Shallow]
-- Prompts used: [list key prompts]
+## Dimension Scores
 
-### Before Transition
-- Braindump sufficient: ✅/❌
-  - Assumptions named: ✅/❌
-  - Know vs guess separated: ✅/❌
-  - Risk/second-order mentioned: ✅/❌
-  - Uncomfortable thought surfaced: ✅/❌
-- Questions before framework: [count]
-- Verification asked: ✅/❌
+| Dimension | Rating | Notes |
+|---|---|---|
+| Questioning quality | [Strong / Good / Medium / Weak] | [1-2 sentence justification] |
+| Perspective taking | [Strong / Good / Medium / Weak] | [1-2 sentence justification] |
+| Framework fit | [Strong / Good / Medium / Weak / N/A] | [1-2 sentence justification] |
+| Artifact clarity | [Strong / Good / Medium / Weak / N/A] | [1-2 sentence justification] |
+| Guidance quality | [Strong / Good / Medium / Weak] | [1-2 sentence justification] |
+| User agency | [Strong / Good / Medium / Weak] | [1-2 sentence justification] |
 
-### Framework Suggestion
-- Framework: [name]
-- Match quality: [High/Medium/Low]
-- Based on braindump: ✅/❌
-- Preflight prompts asked: ✅/❌ (if template-finder path)
+---
 
-## Issues Found
-- [List any issues: golden rule violations, premature transitions, etc.]
+## What Worked Well
+
+[2-5 bullet points. Each should name a specific moment or pattern, not generic praise. Say WHY it worked, not just THAT it worked.]
+
+---
+
+## What Needs Improvement
+
+[2-5 bullet points. Each should name the specific miss, what should have happened, and — critically — the structural root cause (not just "agent didn't follow the rule"). Apply the Root Cause Quality Check from 1-agent-behavior-guide.md §5.]
+
+---
 
 ## Pattern Detection Notes
-- [Any patterns noticed: e.g., "Agent asked good questions but transitioned before uncomfortable thought surfaced"]
+
+[Patterns confirmed from prior evals, new patterns identified, new failure modes. Reference prior eval files by name when a pattern recurs.]
+
+---
 
 ## Success Indicators Met
-- [List which success_indicators from scenario were met]
 
-## Failure Modes Detected
-- [List any failure_modes from scenario that occurred]
+[Checklist: ✅ / ❌ for each relevant success_indicator from the matched scenario. If no scenario matched, list the key behavioral checks and score them.]
+
+---
+
+## Files to Update
+
+| What to change | Where (file path) | Priority | Status |
+|---|---|---|---|
+| [Description of fix] | [File path] | [High / Medium / Low] | [Open / Done YYYY-MM-DD] |
+
+[Use "Done" with date when a fix has been implemented. This makes it possible to audit which eval recommendations were actioned.]
 ```
+
+---
+
+## Notes on the Format
+
+**Why fixed sections:** Earlier evals used inconsistent structures (some had "Checkpoints" sections, some had "Key Findings", some had "Eval Findings"). The fixed structure makes it possible to scan across evals for patterns without re-learning each file's layout.
+
+**Dimension Scores are mandatory.** Even for sessions where some dimensions don't apply (e.g. no framework in a reflection session), rate them "N/A" with a note — don't skip the row.
+
+**Root cause quality matters.** In "What Needs Improvement", always ask: "Why was this structurally likely?" — not just "what happened." See [1-agent-behavior-guide.md](../1-agent-behavior-guide.md) §5.
+
+**Files to Update tracks implementation.** Mark fixes as "Done" with a date when implemented. During eval review sessions, scan this column across all evals to find unresolved recommendations.
 
 ---
 
@@ -74,10 +95,7 @@ When reviewing logs, look for patterns:
 - "Preflight prompts skipped for non-trivial docs"
 - "Questions asked before framework: consistently < 3"
 - "Framework match quality: consistently Low"
-
----
-
-## Usage
+- "Same structural root cause appearing across multiple evals"
 
 **For agents:** When eval checkpoints are hit, append results to a log file in this directory. Use format above.
 
@@ -89,12 +107,12 @@ When reviewing logs, look for patterns:
 
 ## File Naming
 
-Use descriptive names:
-- `eval-2026-02-03-prd-creation.md`
-- `eval-2026-02-03-prioritization-decision.md`
-- `eval-2026-02-03-vague-product-idea.md`
+Use: `YYYY-MM-DD-brief-description.md`
 
-Or use conversation IDs if available.
+Examples from actual evals:
+- `2026-03-27-week-wrap-reflection-and-learning-capture.md`
+- `2026-03-23-stakeholder-avatar-refactoring.md`
+- `2026-03-13-user-research-planning.md`
 
 ---
 

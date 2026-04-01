@@ -26,7 +26,7 @@ This file summarizes the AGENT assistant’s main capabilities, entrypoints, and
 - **conversation** (default): General questions, navigation, non-product topics. Re-route when the user message matches product or doc-request triggers.
 - **product_sense:** Thinking/braindumping; use 0-start-here + PRODUCT-SENSE-RULES + 2-product-sense-prompts; no frameworks/templates until braindump sufficient.
 - **execution_mode:** After braindump sufficient or template-finder path. Use pm-brain-workflow skill + Methods-and-Tools frameworks and templates.
-- **meta_reflection:** After substantial product decisions; suggest logging in `00-Meta/`, optionally Level 2 checklist (`.cursor/evals/`), rule updates (`.cursor/rules/thinking.mdc`). Exit → conversation.
+- **meta_reflection:** After substantial product decisions; suggest logging in `00-Meta/`, optionally Level 2 checklist (`.cursor/evals/`), rule updates. Exit → conversation.
 
 **Mode signaling:** One short natural sentence when switching (e.g. "We've got enough to structure this—here's the framework…"). No internal labels.
 

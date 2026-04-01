@@ -98,6 +98,7 @@ Reflect on each dimension when reviewing a conversation or the written guidance.
 
 Run this after a conversation or when reviewing a transcript. Each item maps to a dimension and to "Where to update" below.
 
+- [ ] **Bootstrap:** Did the agent complete the full bootstrap set before responding? Check especially: (a) resumed sessions — a conversation summary or AGENTS.md attachment is NOT a substitute for file reads; (b) mode transitions — each state transition requires loading the entry files for that state, even mid-conversation.
 - [ ] **Mode:** Did the agent distinguish product_sense vs execution_mode appropriately? (User thinking/braindumping → product_sense; user asked to write/draft a doc → execution via template-finder.)
 - [ ] **Golden rule:** Did it encourage braindump before suggesting any framework or template?
 - [ ] **Questions:** Did it ask 3–5 hard, situation-appropriate questions (from product-sense prompts) before suggesting a framework?
@@ -105,6 +106,7 @@ Run this after a conversation or when reviewing a transcript. Each item maps to 
 - [ ] **Cite:** Did it cite repo paths (e.g. `02-Methods-and-Tools/...`) and avoid generic advice?
 - [ ] **Challenge:** Did it challenge assumptions when appropriate (e.g. "What evidence supports that?") without being condescending?
 - [ ] **Meta:** Did it suggest a meta action when relevant (e.g. log in 00-Meta, forecast log, learning log, or "evolve rules")?
+- [ ] **PJT:** Any time a decision was stated with a confidence level — was the Product Judgment Test offered immediately, without waiting for meta_reflection state?
 
 ---
 
@@ -156,3 +158,22 @@ Use these when you have a real chat that matches a scenario type. Scenarios are 
 
 - Did the agent acknowledge the feeling and help with small, clear steps (e.g. "What's the one thing that would make you feel progress in the next 2 weeks?") instead of dumping a prioritization framework?
 - Did it reduce cognitive load rather than add to it? If not, which dimension and where to update?
+---
+
+## 5. Root Cause Quality Check
+
+When writing or reviewing eval findings, apply this quality bar to each finding:
+
+- **"Why was this structurally likely?"** — not just "what happened." "The agent didn't follow the rule" is a symptom description, not a root cause.
+- **"Would fixing this specific thing prevent recurrence, or just name it?"** — a rule that says "don't skip X" doesn't fix a routing gap. A structural gap makes non-compliance likely regardless of rules.
+- **"Is the recommended file change the right architectural home?"** — see "Where to update" map. `thinking.mdc` is a universal always-on layer; don't route personal, org-specific, or procedural rules into it.
+
+Common structural root causes (not agent errors):
+
+| Observed behavior | Structural root cause to check |
+|---|---|
+| Agent skipped bootstrap | Was there a resumed session without explicit bootstrap instruction in the platform file? |
+| Mode-specific files not loaded at transition | Does ORCHESTRATION.md list entry files as mandatory for that state? |
+| Recurring rule miss despite rule existing | Is the trigger a judgment call (fragile) or a named event (reliable)? Make it unconditional. |
+| Rule ended up in wrong file | Does the rule belong in a universal layer (thinking.mdc) or a specific file (ORCHESTRATION, AGENTS, thinking.personal)? |
+| Agent treated attachment as bootstrap | Platform bootstrap file missing explicit "attachment ≠ bootstrap" note. |
