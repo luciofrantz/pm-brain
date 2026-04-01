@@ -39,7 +39,7 @@ These guidelines describe **how to use and evolve** this repo so it stays useful
 - **00-Meta/**  
   - Personal practice: daily log, weekly/monthly reflection, growth portfolio, Product Judgment Test (forecast log, calibration).  
   - Canonical prompts and templates live in `02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/`; `00-Meta/` stores what you *do* and *learn*.  
-  - See [00-Meta/README.md](00-Meta/README.md) and [MODE-SELECTION-GUIDE.md](00-Meta/MODE-SELECTION-GUIDE.md) for modes (Public/Private/Team).
+  - See [00-Meta/README.md](..\/00-Meta/README.md) and [MODE-SELECTION-GUIDE.md](..\/00-Meta/MODE-SELECTION-GUIDE.md) for modes (Public/Private/Team).
 
 - **01-Company-Context/**  
   - Vision, strategy, principles, roadmap, stakeholders.  
@@ -48,7 +48,7 @@ These guidelines describe **how to use and evolve** this repo so it stays useful
 - **02-Methods-and-Tools/**  
   - Frameworks, guides, templates, playbooks.  
   - **2.0-Foundations** (product sense, mental models, bias) → **2.1-Strategy** → **2.2-Discovery** → **2.3-Execution** → **2.4-Communication**.  
-  - **Entry point for product thinking:** [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md). Prefer **generic, reusable** content here (not initiative-specific).
+  - **Entry point for product thinking:** [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md). Prefer **generic, reusable** content here (not initiative-specific).
 
 - **03-Research-Artifacts/**  
   - Research plans, notes, synthesis, key findings.  
@@ -111,8 +111,8 @@ When in doubt:
 ## 5. Using AI with This Repo
 
 - **Think first, template second (golden rule)**  
-  - See [PRODUCT-SENSE-RULES.md](PRODUCT-SENSE-RULES.md). Start product/stakeholder/organization thinking from the **entry point** [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md): copy the simple prompt into a new chat; the agent will braindump with you, then point to Strategy, Discovery, Execution, or Communication.  
-  - Use frameworks’ **braindump prompts** ([2-product-sense-prompts.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/2-product-sense-prompts.md)) before filling in templates.  
+  - See [PRODUCT-SENSE-RULES.md](..\/PRODUCT-SENSE-RULES.md). Start product/stakeholder/organization thinking from the **entry point** [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md): copy the simple prompt into a new chat; the agent will braindump with you, then point to Strategy, Discovery, Execution, or Communication.  
+  - Use frameworks’ **braindump prompts** ([2-product-sense-prompts.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/2-product-sense-prompts.md)) before filling in templates.  
   - Ask AI to challenge assumptions, not just “fill the blanks”.
 
 - **Good patterns**
@@ -169,8 +169,6 @@ When in doubt:
 
 **Version tracking:** The repository uses semantic versioning in `version.json` (repo root) to track major structural changes. This helps agents detect when repository structure changes and coordinates with GitHub releases.
 
-**📖 New to versioning?** See [VERSION-WORKFLOW-SIMPLE.md](VERSION-WORKFLOW-SIMPLE.md) for a plain-language explanation.
-
 **When to update:**
 - **MAJOR** (e.g. 1.0.0 → 2.0.0): Breaking changes to AGENTS.md, ORCHESTRATION.md, docs/architecture.md, MEMORY.md, or framework structure
 - **MINOR** (e.g. 1.0.0 → 1.1.0): New frameworks, rules, skills, or significant documentation additions
@@ -184,7 +182,7 @@ When in doubt:
 
 **Important:** You DON'T update version.json on every push—only when you make significant structural changes (new frameworks, breaking changes, etc.). Most pushes don't need a version bump.
 
-See [architecture.md](architecture.md) → "Version Management", [ORCHESTRATION.md](../ORCHESTRATION.md) → Version Management, and `RELEASE-PROCESS.md` for detailed guidelines.
+See [architecture.md](architecture.md) → "Version Management" and [ORCHESTRATION.md](../ORCHESTRATION.md) → Version Management for detailed guidelines. Note: `version.json` is sleeping memory (loaded on demand), not part of the bootstrap set.
 
 ---
 

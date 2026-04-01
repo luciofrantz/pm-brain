@@ -55,8 +55,6 @@
 # Note: CONTEXT.md can be optionally tracked for team consistency (see below)
 01-Company-Context/*.md
 !01-Company-Context/README.md
-!01-Company-Context/SETUP.md
-!01-Company-Context/SETUP-QUICK-REFERENCE.md
 # Uncomment the next line if you want to share CONTEXT.md with your team for consistent naming:
 # !01-Company-Context/CONTEXT.md
 

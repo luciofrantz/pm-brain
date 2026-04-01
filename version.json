@@ -1,8 +1,14 @@
 {
-  "version": "3.4.0",
-  "lastUpdated": "2026-02-27T00:00:00Z",
+  "version": "3.5.0",
+  "lastUpdated": "2026-04-01T00:00:00Z",
   "schemaVersion": "1.0",
   "changelog": [
+    {
+      "version": "3.5.0",
+      "date": "2026-04-01",
+      "type": "minor",
+      "summary": "Meta-system update. Bootstrap optimized from 6 files (~17,800 tokens) to 5 files (~14,600 tokens): version.json moved to sleeping memory. AGENTS.md trimmed to persona + pointers. thinking.mdc stripped to 7 always-on coaching lenses (unique value only). Added .github/copilot-instructions.md as VS Code + Copilot bootstrap layer. ORCHESTRATION.md: company context routing guard, intent disambiguation, mid-conversation transition enforcement, Claude Code bootstrap ref. MEMORY.md wake tables updated. New frameworks: 10-Things Workshop (2.3.8), Documentation Standards (2.4.10). Setup files relocated from 01-Company-Context/ to docs/platform-setup.md. Eval system: agent behavior guide and scenarios updated."
+    },
     {
       "version": "3.4.0",
       "date": "2026-02-27",
@@ -13,7 +19,7 @@
       "version": "3.3.0",
       "date": "2026-02-20",
       "type": "minor",
-      "summary": "Refined README opening for stronger PM pain clarity and concise positioning. Added lightweight guidelines wiring by adding docs/guidelines.md wake triggers in MEMORY and reminder behavior in ORCHESTRATION. Standardized terminology to full forms (organization/communication), renamed 01-Company-Context/1.2-Org-Survival to 1.2-Organization-Survival and updated links, and aligned agent naming to PM Brain Coach across AGENTS/setup/rules docs."
+      "summary": "Refined README opening for stronger PM pain clarity and concise positioning. Added lightweight guidelines wiring by adding docs/guidelines.md wake triggers in MEMORY and reminder behavior in ORCHESTRATION. Standardized terminology to full forms (organization/communication), renamed 01-Company-Context/1.2-Organization-Survival to 1.2-Organization-Survival and updated links, and aligned agent naming to PM Brain Coach across AGENTS/setup/rules docs."
     },
     {
       "version": "3.2.0",
@@ -31,7 +37,7 @@
       "version": "3.0.0",
       "date": "2026-02-13",
       "type": "major",
-      "summary": "Platform-agnostic core and context rot prevention. AGENTS.md and ORCHESTRATION.md no longer reference .cursor/ paths directly; MEMORY.md is now the single path-mapping layer for platform-specific files (rules, skills, evals). Added Context Health section to ORCHESTRATION.md (heuristic-based checkpointing, re-anchoring, error recovery). Created CLAUDE.md for Claude Code. Added checkpoints/ folder for session state persistence. Updated SETUP.md with multi-platform setup guide."
+      "summary": "Platform-agnostic core and context rot prevention. AGENTS.md and ORCHESTRATION.md no longer reference .cursor/ paths directly; all platform-specific paths now routed through MEMORY.md. Added Context Health section to ORCHESTRATION.md (heuristic checkpointing, re-anchoring, error recovery). Created CLAUDE.md for Claude Code. Added checkpoints/ folder for session state persistence. Updated SETUP.md with multi-platform setup guide."
     },
     {
       "version": "2.2.0",
@@ -65,12 +71,10 @@
     }
   ],
   "breakingChanges": [
-    "AGENTS.md and ORCHESTRATION.md no longer contain .cursor/ paths; all platform-specific paths now routed through MEMORY.md",
-    "MEMORY.md now includes Evals section as path-mapping layer for eval functions, behavior guide, and test infrastructure",
-    "Context Health section added to ORCHESTRATION.md: heuristic checkpointing, re-anchoring at state transitions, error recovery",
-    "New file: CLAUDE.md (Claude Code adapter); new folder: checkpoints/ (session state persistence)",
-    "SETUP.md Step 7 rewritten as multi-platform setup guide (Cursor, Claude Code, Claude.ai, ChatGPT, GitHub Copilot, universal)",
-    "Renamed company-context politics folder from 01-Company-Context/1.2-Org-Survival/ to 01-Company-Context/1.2-Organization-Survival/; update external links and personal references accordingly"
+    "Bootstrap set reduced from 6 files to 5: AGENTS.md, ORCHESTRATION.md, voice.mdc, thinking.mdc, thinking.personal.mdc. version.json is now sleeping memory (woken on demand via MEMORY.md), not bootstrap",
+    "thinking.mdc stripped to coaching lenses only — persona, braindump rules, core expectations, context sources, complex tradeoffs sections removed (canonical homes: AGENTS.md, ORCHESTRATION.md)",
+    ".github/copilot-instructions.md is now the explicit VS Code + GitHub Copilot bootstrap layer for loading the always-on set before first response",
+    "Setup files moved from 01-Company-Context/SETUP.md and SETUP-QUICK-REFERENCE.md to docs/platform-setup.md"
   ],
   "structure": {
     "frameworks": 14,

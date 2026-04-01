@@ -25,6 +25,9 @@ Pick one and open the README + template in that folder. Paths are relative to `0
 | **Strategy doc (Playing to Win, etc.)** | [2.1-Strategy/2.1.1-Strategic-Foundations/](2.1-Strategy/2.1.1-Strategic-Foundations/) — when-to-use-which.md, then 3-Playing-To-Win or 2-Good-Strategy-Bad-Strategy |
 | **Research / discovery plan** | [2.2-Discovery/README.md](2.2-Discovery/README.md) — then 2.2.1-Research-Interviews or 2.2.2-Continuous-Discovery-Habits |
 | **Mental models / thinking tools** (pre-mortems, one-way doors, outcome vs output, etc.) | [2.0-Foundations/0-index.md](2.0-Foundations/0-index.md) — full Foundations index; or [1-frameworks-by-topic.md](1-frameworks-by-topic.md) by topic |
+| **Decision record** (why we chose X, alternatives) | [2.4-Communication/2.4.10-Documentation-Standards/](2.4-Communication/2.4.10-Documentation-Standards/) — README, then 2-decision-record-template.md |
+| **Architecture / technical doc** | [2.4-Communication/2.4.10-Documentation-Standards/](2.4-Communication/2.4.10-Documentation-Standards/) — README, then 3-architecture-technical-template.md |
+| **Documentation standards** (taxonomy, metadata, templates) | [2.4-Communication/2.4.10-Documentation-Standards/](2.4-Communication/2.4.10-Documentation-Standards/) — README, then 1-documentation-standards-framework.md |
 | **Something else** | [1-frameworks-by-topic.md](1-frameworks-by-topic.md) or [README.md](README.md) |
 
 ---

@@ -2,12 +2,44 @@
 
 > **Welcome!** This guide will help you get your PM Brain repository configured and ready to use. No technical knowledge required—just follow the steps.
 
+## ⚠️ IMPORTANT: Fork Privacy
+
+**If you're using PM Brain for real company work**, do NOT use a public fork. The original PM Brain repo is public, so any fork defaults to public too. Your company context, roadmaps, and stakeholder info should NOT be visible to everyone.
+
+**Choose one:**
+
+- **Option A (Recommended):** Create a **private repo** on GitHub, then clone PM Brain into it. See [Step 1: Get the Repository](#-step-1-get-the-repository) → Option B below for exact steps.
+- **Option B:** Work locally without pushing to GitHub (use git locally only).
+- **Option C:** Fork the public repo, but use `.gitignore` to prevent pushing sensitive files. See [Step 3: Choose Public / Private / Team Mode](#-step-3-choose-public--private--team-mode).
+
+**Bottom line:** Don't accidentally push company strategy to the internet.
+
+---
+
+## 🔧 First: Choose Your AI Tool
+
+Your tool choice affects how PM Brain configures itself — some tools auto-load rules, others require a manual setup prompt each session.
+
+| Tool | Rules auto-load? | Setup effort |
+|------|-----------------|---------------|
+| **Cursor** | Yes (`.cursor/rules/`) | Minimal |
+| **VS Code + GitHub Copilot** | Yes (`.github/copilot-instructions.md`) | Minimal |
+| **Claude Code** | No — manual per session | Some |
+| **ChatGPT / Claude.ai** | No — copy-paste per session | More |
+
+See [platform-setup.md](platform-setup.md) for full per-tool instructions. If you’re using Cursor or VS Code + Copilot, the agent configures itself automatically once you’ve done the company context setup below. For other tools, follow the manual steps in that guide.
+
+**Once setup is done:** open a chat with your agent and say “verify my PM Brain setup is complete and aligned with best practices” — it will check your configuration and flag anything missing.
+
+---
+
 ## 📋 Quick Start Checklist
 
-- [ ] Clone or fork the repository
+- [ ] Choose your GitHub approach (private repo, local-only, or managed .gitignore)
 - [ ] Read this SETUP guide
 - [ ] Review the main README.md
 - [ ] Read [guidelines.md](guidelines.md) for best practices
+- [ ] Read [platform-setup.md](platform-setup.md) if you're NOT using Cursor
 - [ ] Customize Company Context (Priority 1)
 - [ ] Review AI/Agent configuration (if using Cursor or similar)
 - [ ] Try your first framework
@@ -26,26 +58,38 @@
   cd pm-brain
   ```
 
-- If you’re working with **real company context**, prefer a **private fork**:
+- If you're working with **real company context**, create a **private repo first**:
 
-  1. Click “Fork” on GitHub and set visibility to **Private**.  
-  2. Then:
+  1. **Create a new private repo on GitHub** (empty, no README):
+     - Go to github.com → New repository
+     - Name it (e.g., `pm-brain-private`, `pm-brain-company`)
+     - Set to **Private**
+     - Click Create
 
+  2. **Clone PM Brain locally and push to your private repo:**
      ```bash
-     git clone https://github.com/YOUR-USERNAME/pm-brain.git
+     git clone https://github.com/andreaskelm/pm-brain.git
      cd pm-brain
+     git remote set-url origin https://github.com/YOUR-USERNAME/pm-brain-private.git
+     git branch -M main
+     git push -u origin main
      ```
 
-  This lets you keep company‑specific context private while still pulling updates from the main repository.
+  3. **Add upstream to stay synced with PM Brain updates:**
+     ```bash
+     git remote add upstream https://github.com/andreaskelm/pm-brain.git
+     git fetch upstream
+     ```
+
+  This keeps your company context private while pulling future updates.
 
 ### Option B: Team/Company Framework Repo
 
 If you want a shared repo for your team’s frameworks/templates:
 
-1. Fork the repo into your organization (public or private as appropriate).  
-2. Treat this fork as the **team library**:
-   - Track `02-Methods-and-Tools/` and any sanitized examples.  
-   - Keep everyone’s personal `00-Meta/` logs private via **Team mode** (see below).
+1. **Create a private org repo** on GitHub (coordinate with org admin).  
+2. Clone PM Brain into it (same steps as Option A above).  
+3. Use [Step 3](#-step-3-choose-public--private--team-mode) → **Team mode** to manage what's tracked (keep personal Meta logs private).
 
 ---
 
@@ -65,7 +109,7 @@ pm-brain/
 **Key insight:** 
 - `00-Meta/` = **YOUR PRACTICE** (daily log, weekly/monthly reflection, growth portfolio, forecast calibration). Canonical prompts and templates live in `02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/`.
 - `01-Company-Context/` = **YOU MUST CUSTOMIZE THIS** (your company info)
-- `02-Methods-and-Tools/` = **READY TO USE** — **2.0-Foundations** (think first, product sense), **2.1-Strategy**, **2.2-Discovery**, **2.3-Execution**, **2.4-Communication**. Start product thinking from [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md).
+- `02-Methods-and-Tools/` = **READY TO USE** — **2.0-Foundations** (think first, product sense), **2.1-Strategy**, **2.2-Discovery**, **2.3-Execution**, **2.4-Communication**. Start product thinking from [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md).
 - `03-Research-Artifacts/` = **YOUR RESEARCH** (add your interview notes, findings)
 - `04-Initiatives/` = **YOUR WORK** (document your active initiatives)
 
@@ -122,49 +166,38 @@ For details and decision help, see `00-Meta/MODE-SELECTION-GUIDE.md`.
 
 ### Priority 1: Company Context (`01-Company-Context/`)
 
-**This is the most important step.** Set up your company context structure based on your unique organizational setup.
+**This is the most important step.** Your company context is what makes PM Brain useful for YOUR situation instead of generic advice.
 
-#### Step 1: Personalize Your Context
+#### Step 1: Fill out CONTEXT.md (2-3 minutes)
 
-1. **Fill out `CONTEXT.md`** (2-3 minutes)
-   - Your name and role
-   - Company name (this replaces `[Company]` placeholders throughout)
-   - Team and business unit names (if applicable)
+Open `01-Company-Context/CONTEXT.md` and add your name, role, company, and team. This is the quick-reference card that agents use to know who you are and where you sit.
 
-#### Step 2: Run the Setup Guide
+#### Step 2: Create the core docs you actually need
 
-2. **Follow the setup guide** [`01-Company-Context/SETUP.md`](01-Company-Context/SETUP.md)
-   - Discover your organizational structure through probing questions
-   - Plan the right document structure (flat, BU-level, team-level, etc.)
-   - Implement incrementally - you don't need to do everything at once
+> **Joining an existing org?** You probably don't need all of these. If your strategy lives in SharePoint and your roadmap is managed elsewhere, don't rebuild them here — mark them `Reference` or `External` in `01-Company-Context/CONTEXT-HEALTH.md` and move on. Only create what you actually own and will maintain.
 
-**The setup guide helps you:**
-- Understand if you need business unit subfolders
-- Determine how to organize OKRs (company/BU/team level)
-- Plan roadmap structure (single vs BU-specific vs team-specific)
-- Set up stakeholder organization
+The core documents (all in `01-Company-Context/`):
 
-#### Step 3: Create Core Documents
+- `1-company-vision.md` — Mission, vision, values
+- `2-company-strategy.md` — Strategic priorities
+- `3-company-product-principles.md` — Product principles (skip if your org doesn't have explicit ones)
+- `4-company-product-explanation.md` — Product portfolio
+- `5-company-roadmap.md` — Roadmap (skip if managed elsewhere)
+- `6-company-stakeholders.md` — Stakeholder directory
 
-3. **Create core documents** (30-60 minutes):
-   - `1-company-vision.md` - Company mission, vision, values
-   - `2-company-strategy.md` - Strategic priorities and initiatives
-   - `3-company-product-principles.md` - Product principles
-   - `4-company-product-explanation.md` - Product portfolio
-   - `5-company-roadmap.md` - Company roadmap (if applicable)
-   - `6-company-stakeholders.md` - Stakeholder directory
+Replace `[Company]` placeholders with your actual company name. Replace placeholder content with real content. Skip files that don't apply.
 
-**How to update:**
-- Replace `[Company]` placeholders with your company name from CONTEXT.md
-- Replace `[Placeholder]` text with your actual content
-- Keep the structure, customize the content
-- Commit your changes: `git commit -am "Add company context"`
+#### Step 3: Structure (flat is fine)
 
-**Time estimate:** 
-- Personalization: 2-3 minutes
-- Setup guide: 15-30 minutes (discovery and planning)
-- Core documents: 30-60 minutes
-- **Total: 1-2 hours** (can be done incrementally)
+Most orgs need a **flat structure** — all docs at root level inside `01-Company-Context/`. If you have distinct business units with separate strategies and roadmaps, create BU subfolders (e.g. `1.1-Business-Unit-A/`). If you're not sure, start flat — you can always add structure later.
+
+#### Optional: Stakeholder Avatars
+
+If you work with a recurring cast of stakeholders and want the agent to simulate "what would my manager say?" or run politics checks, set up stakeholder avatars in `01-Company-Context/1.1-Stakeholder-Avatars/`. One file per person. See the [setup guide there](../01-Company-Context/1.1-Stakeholder-Avatars/README.md) and the [framework](../02-Methods-and-Tools/2.4-Communication/2.4.8-Stakeholder-Avatars/README.md).
+
+#### Step 4: Track freshness
+
+Once your docs exist, populate `01-Company-Context/CONTEXT-HEALTH.md` with the docs you created, their rot risk, and whether they're `Maintained`, `Reference`, or `External`. This tells the agent when to nudge you about stale context.
 
 ---
 
@@ -184,7 +217,7 @@ If you're using **Cursor** (or similar AI-powered IDE), the repository includes 
 
 **What to do:**
 1. **Review** `AGENTS.md` and `ORCHESTRATION.md` — Understand how the PM Brain Coach is configured and how it routes and loads context
-2. **Fill out** `01-Company-Context/CONTEXT.md` - Add your name, company name, and team/BU names (organizational context)
+2. **Fill out** `01-Company-Context/CONTEXT.md` - Add your name, company name, and team/Business Unit names (organizational context)
    - **Note:** In private/team modes, this file is ignored by default. In team mode, you can optionally track it for team consistency (see `.gitignore.team` comments).
 3. **Customize** `.cursor/rules/thinking.personal.mdc` - Add your personal working style, preferences, and communication style (how you like to work)
    - **Note:** Both files may include your name - keep them consistent. `CONTEXT.md` focuses on organizational context; `thinking.personal.mdc` focuses on how you work.
@@ -220,7 +253,7 @@ If you're using **Cursor** (or similar AI-powered IDE), the repository includes 
 
 If you want to build product sense deliberately (daily log, weekly reflection, growth portfolio, forecast calibration):
 
-1. **Read** [00-Meta/README.md](00-Meta/README.md) for what lives there and the minimal workflow.
+1. **Read** [00-Meta/README.md](..\/00-Meta/README.md) for what lives there and the minimal workflow.
 2. **Copy** the daily log template from `02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/templates/daily-log-template.md` to `00-Meta/1-daily-log-YYYY-QX.md` (e.g. `1-daily-log-2026-Q1.md`).
 3. **Optional:** Before shipping a feature, log a forecast in `00-Meta/0.3-Product-Judgment-Test/forecast-log.md`; resolve when data is in (calibration).
 
@@ -255,11 +288,11 @@ The templates in `02-Methods-and-Tools/` work as-is, but you can customize them 
 
 ### Start with product thinking (braindump first)
 
-1. **Open the entry point:** [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md)
+1. **Open the entry point:** [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md)
 2. **Copy the "Simple prompt to start"** at the top into a new chat (e.g. with Cursor or any AI). The agent will ask hard questions and braindump with you before suggesting any framework.
 3. **Only after a braindump** use the **Frameworks by situation** table in that file (or the domain READMEs) to open the right framework: Strategy, Discovery, Execution, or Communication.
 
-**Golden rule:** Braindump before structure. See [PRODUCT-SENSE-RULES.md](PRODUCT-SENSE-RULES.md).
+**Golden rule:** Braindump before structure. See [PRODUCT-SENSE-RULES.md](..\/PRODUCT-SENSE-RULES.md).
 
 ### Then try a framework
 
@@ -297,7 +330,7 @@ PM Brain works on any AI platform. The core knowledge (frameworks, templates, or
 ### Cursor (auto-loads)
 
 1. **Open the repository** in Cursor — rules, skills, and commands load automatically from `.cursor/`.
-2. The AI already knows the repo via `AGENTS.md`. For product thinking, it starts from [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md): braindump first, then frameworks.
+2. The AI already knows the repo via `AGENTS.md`. For product thinking, it starts from [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md): braindump first, then frameworks.
 3. **Slash commands** available (see `.cursor/commands/`): `/start`, `/braindump`, `/framework`, `/day`, `/week`, `/focus`, `/unstuck`, `/navigate`, `/bias`, `/evaluate`, `/meta`.
 
 **Use PM Brain in any project (Cursor only):**
@@ -307,7 +340,7 @@ npx skills add andreaskelm/pm-brain
 
 ### Claude Code (reads CLAUDE.md)
 
-1. Open the repo in Claude Code — it reads [CLAUDE.md](CLAUDE.md) automatically.
+1. Open the repo in Claude Code — it reads [CLAUDE.md](..\/CLAUDE.md) automatically.
 2. Full file system access. The agent reads `AGENTS.md`, `ORCHESTRATION.md`, and `MEMORY.md` to know what to do.
 3. Use `/compact` when context grows heavy. Use the checkpoint protocol (see `ORCHESTRATION.md` → Context Health) for long sessions.
 
@@ -317,7 +350,7 @@ npx skills add andreaskelm/pm-brain
 2. Upload `.cursor/rules/voice.mdc` content for communication style (recommended — this is the persona's tone and voice).
 3. Reference framework files by asking the agent to work from them (paste or describe).
 
-**For persistent coaching:** Use the [Product Coach setup template](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/templates/6-product-coach-setup.md) — copy it into a Claude Project for the same braindump-first coaching approach.
+**For persistent coaching:** Use the [Product Coach setup template](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/templates/6-product-coach-setup.md) — copy it into a Claude Project for the same braindump-first coaching approach.
 
 ### ChatGPT / Gemini / Other
 
@@ -327,8 +360,10 @@ npx skills add andreaskelm/pm-brain
 
 ### GitHub Copilot / VS Code
 
-1. Point Copilot at this repository. It reads `AGENTS.md` from root.
-2. Reference framework files via `@workspace` mentions.
+1. Open the repository in VS Code with the GitHub Copilot extension installed.
+2. `.github/copilot-instructions.md` auto-loads into every Copilot conversation — it instructs the agent to read the full 5-file bootstrap set (AGENTS.md, ORCHESTRATION.md, voice.mdc, thinking.mdc, thinking.personal.mdc) before responding.
+3. Use **Agent mode** in the Copilot Chat panel for full bootstrap compliance (file read tools required).
+4. See [platform-setup.md](platform-setup.md) for detailed setup, model selection, known limitations, and troubleshooting.
 
 ### Universal (any platform)
 
@@ -414,13 +449,13 @@ Once you're set up:
 
 ## 📚 Additional Resources
 
-- **Main README:** [README.md](README.md) — Overview and philosophy
-- **Product thinking entry point:** [0-start-here-product-thinking.md](02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) — Simple prompt to start; braindump first, then frameworks by situation
-- **Golden rule:** [PRODUCT-SENSE-RULES.md](PRODUCT-SENSE-RULES.md) — Braindump before structure
+- **Main README:** [README.md](..\/README.md) — Overview and philosophy
+- **Product thinking entry point:** [0-start-here-product-thinking.md](..\/02-Methods-and-Tools/2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) — Simple prompt to start; braindump first, then frameworks by situation
+- **Golden rule:** [PRODUCT-SENSE-RULES.md](..\/PRODUCT-SENSE-RULES.md) — Braindump before structure
 - **Guidelines:** [guidelines.md](guidelines.md) — Best practices for using and maintaining your PM brain
-- **Agent configuration:** [AGENTS.md](AGENTS.md) (persona), [ORCHESTRATION.md](ORCHESTRATION.md) (routing & states), [MEMORY.md](MEMORY.md) (what to wake); `.cursor/rules/AGENTS.template.md` for custom agents
-- **Framework Navigation:** [02-Methods-and-Tools/README.md](02-Methods-and-Tools/README.md) — Strategy, Discovery, Execution, Communication
-- **00-Meta (practice):** [00-Meta/README.md](00-Meta/README.md) — Daily log, learning log, growth portfolio, Product Judgment Test
+- **Agent configuration:** [AGENTS.md](..\/AGENTS.md) (persona), [ORCHESTRATION.md](..\/ORCHESTRATION.md) (routing & states), [MEMORY.md](..\/MEMORY.md) (what to wake); `.cursor/rules/AGENTS.template.md` for custom agents
+- **Framework Navigation:** [02-Methods-and-Tools/README.md](..\/02-Methods-and-Tools/README.md) — Strategy, Discovery, Execution, Communication
+- **00-Meta (practice):** [00-Meta/README.md](..\/00-Meta/README.md) — Daily log, learning log, growth portfolio, Product Judgment Test
 - **Credits:** [credits.md](credits.md) — Attribution for frameworks and methods
 
 ---
@@ -441,7 +476,6 @@ Once you're set up:
 
 - Check `02-Methods-and-Tools/README.md` for navigation
 - Search the repository for keywords
-- Check `TODO.md` to see what's planned
 
 ### "The AI assistant doesn't understand my question"
 
@@ -468,4 +502,4 @@ You've completed the setup. Now go build great products! 🚀
 **Questions?** Check the main `README.md` or explore the framework folders. The system is designed to be self-explanatory as you use it.
 
 **Created by:** [Andreas Kelm](https://github.com/andreaskelm)  
-**Last updated:** 2026-01-31
+**Last updated:** 2026-04-01

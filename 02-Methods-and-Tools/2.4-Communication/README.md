@@ -47,6 +47,8 @@ After your braindump, use the frameworks below to structure your communication.
 
 - `2.4.9-Courses/` — Course design framework and template. **Use when:** You need to structure internal enablement, PM onboarding, or external training materials in a repeatable way.
 
+- `2.4.10-Documentation-Standards/` — Documentation taxonomy, metadata standards, and templates for decision records and architecture docs. Designed for AI-readiness in 2027. **Use when:** You need to create documentation that serves a specific audience, follows team standards, and is optimized for both humans and AI agents.
+
 ## Typical flows
 
 ```
@@ -70,6 +72,9 @@ Courses (for training and enablement)
 | Starting new initiative | `2.4.7-Stakeholder-Management/` | Map and manage stakeholders effectively |
 | "What would my manager say?" / politics check | `2.4.8-Stakeholder-Avatars/` | Set up or use stakeholder avatars for simulation |
 | Creating training materials | `2.4.9-Courses/` | Brain-based learning design framework |
+| Documenting a decision | `2.4.10-Documentation-Standards/` | Decision record with alternatives, rationale, consequences |
+| Documenting system architecture | `2.4.10-Documentation-Standards/` | Technical overview with components, data flow, operational context |
+| Setting documentation standards | `2.4.10-Documentation-Standards/` | Taxonomy, metadata, AI-readiness principles |
 
 ## Related domains / cross-links
 

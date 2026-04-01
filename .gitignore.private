@@ -54,8 +54,6 @@
 # Company context (vision, strategy, stakeholders, personalization)
 01-Company-Context/*.md
 !01-Company-Context/README.md
-!01-Company-Context/SETUP.md
-!01-Company-Context/SETUP-QUICK-REFERENCE.md
 
 # ============================================
 # Personal Configuration
