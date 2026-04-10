@@ -6,33 +6,17 @@ This directory contains the foundational company context documents that provide 
 
 ## First Time Setup
 
-**New to this directory?** Start here:
+**New to this directory?** Start with the main setup guide: [`docs/setup.md`](../docs/setup.md) — it covers company context setup as part of the overall PM Brain configuration.
 
-👉 **[`SETUP.md`](SETUP.md)** - Step-by-step guide to set up your company context structure based on your unique organizational setup (business units, teams, strategic planning structure, etc.)
-
-**Quick reference:** [`SETUP-QUICK-REFERENCE.md`](SETUP-QUICK-REFERENCE.md) - One-page checklist for common scenarios
-
-**Personalization:** Start by filling out [`CONTEXT.md`](CONTEXT.md) with your name, company name, and team/BU names. This personalizes AI assistance and makes documents more relevant.
+**Personalization:** Fill out [`CONTEXT.md`](CONTEXT.md) with your name, company name, and team/BU names.
 
 **Onboarding:** Once basic context exists, read [`1.3-Onboarding/1-top-10-things-you-should-know.md`](1.3-Onboarding/1-top-10-things-you-should-know.md) for a fast tour of how company context, metrics, acronyms, and methods fit together.
-
-The setup guide helps you:
-- Discover your organizational structure through probing questions
-- Plan the right document structure (flat, BU-level, team-level, etc.)
-- Implement incrementally (no need to do everything at once)
-- Accommodate different structures (company/BU/team-level OKRs, multiple teams, etc.)
 
 ## Overview
 
 These documents should be the outcome of actual strategic work and organizational planning. The placeholder content should be replaced with your company's actual information developed through proper processes.
 
-**Organizational structure flexibility:** This directory can accommodate any organizational model:
-- **Flat structure** (startup, single team) - All documents at root level
-- **Business unit structure** (enterprise, multiple BUs) - BU subfolders with BU-specific documents
-- **Team structure** (multiple teams) - Team-level organization as needed
-- **Mixed structures** - Any combination of the above
-
-See [`SETUP.md`](SETUP.md) to determine the right structure for your company.
+**Structure:** Flat is fine for most orgs (all docs at root level). If you have distinct business units with separate strategies, add BU subfolders (e.g. `1.1-Business-Unit-A/`). Start flat and add structure when you need it.
 
 ## Document Structure
 
@@ -63,15 +47,12 @@ This structure creates a natural flow: **Why → What → How → What Exists �
 
 ### Organizational
 - **`6-company-stakeholders.md`** - Technology & Product organization stakeholder directory
-- **`1.1-Stakeholder-Avatars/`** - Stakeholder and peer avatars (brainfeed cast) for simulation and politics checks — one file per person (e.g. 1-jane-manager.md). Naming: single digit, name, role, optional organization. See [1.1-Stakeholder-Avatars/README.md](1.1-Stakeholder-Avatars/README.md) for naming and how to add; setup method: [02-Methods-and-Tools/2.4-Communication/2.4.8-Stakeholder-Avatars/](../02-Methods-and-Tools/2.4-Communication/2.4.8-Stakeholder-Avatars/README.md). See also [SETUP.md](SETUP.md) → Stakeholder avatars.
+- **`1.1-Stakeholder-Avatars/`** - Stakeholder and peer avatars (brainfeed cast) for simulation and politics checks — one file per person (e.g. 1-jane-manager.md). Naming: single digit, name, role, optional organization. See [1.1-Stakeholder-Avatars/README.md](1.1-Stakeholder-Avatars/README.md) for naming and how to add; setup method: [02-Methods-and-Tools/2.4-Communication/2.4.8-Stakeholder-Avatars/](../02-Methods-and-Tools/2.4-Communication/2.4.8-Stakeholder-Avatars/README.md).
 - **`1.2-Organization-Survival/`** - Organization-level politics and survival cheat sheet (power map, alliances, games, timing, red flags). Personal and agent-facing only. See [1.2-Organization-Survival/README.md](1.2-Organization-Survival/README.md) for structure and prompts.
 
 ## How to Use This Directory
 
-**First time setup:**
-1. **Run the setup guide** - Go through [`SETUP.md`](SETUP.md) to understand your organizational structure and plan your document structure
-2. **Create core documents** - Start with Vision & Strategy, then add other documents incrementally
-3. **Add organizational layers** - Create BU/team subfolders as needed based on your structure
+**First time setup:** See [`docs/setup.md`](../docs/setup.md) → Priority 1. Fill out CONTEXT.md, create the core docs that apply to your org, skip what doesn't.
 
 **Ongoing use:**
 1. **Start with Vision & Strategy** - These documents should be created first through the Product Strategy framework
@@ -79,7 +60,7 @@ This structure creates a natural flow: **Why → What → How → What Exists �
 3. **Document Portfolio** - Catalog your products and customer segments
 4. **Build Roadmap** - Create company-wide roadmap aligned with strategy (and BU/team roadmaps if applicable)
 5. **Maintain Stakeholders** - Keep stakeholder directory current
-6. **Update structure** - When organizational changes occur (new BUs, teams, OKR structure changes), review [`SETUP.md`](SETUP.md) to see if your structure needs updating, and update [`CONTEXT.md`](CONTEXT.md) with new names
+6. **Update structure** - When organizational changes occur (new BUs, teams), add subfolders as needed and update [`CONTEXT.md`](CONTEXT.md)
 
 ---
 
@@ -117,7 +98,7 @@ I'll start by telling you which parts of our company context feel most unclear r
 
 - **Quarterly Reviews**: Review all documents quarterly for accuracy and relevance
 - **After Major Changes**: Update relevant documents when strategy, organization structure, or priorities change
-- **Organizational Structure Changes**: When new BUs, teams, or strategic planning structures emerge, review [`SETUP.md`](SETUP.md) to determine if your directory structure needs updating, and update [`CONTEXT.md`](CONTEXT.md) accordingly
+- **Organizational Structure Changes**: When new BUs, teams, or strategic planning structures emerge, add subfolders as needed and update [`CONTEXT.md`](CONTEXT.md) accordingly
 - **Version Control**: Use git to track changes and maintain history
 - **Stakeholder Updates**: Update stakeholder directory when organization changes occur
 

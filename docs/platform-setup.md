@@ -167,12 +167,7 @@ Save your context as a reusable ChatGPT "custom instruction" or workspace note (
 
 ## Model Selection: Why It Matters
 
-**The issue:** You started with Grok (auto-toggled); it ignored setup instructions and went rogue.
-
-**Why models matter for PM Brain:**
-- PM Brain relies on **instruction-following** and **nuanced routing** (product_sense vs execution_mode)
-- Weaker models don't follow the golden rule; they skip braindump and jump to templates
-- Better models (Haiku 4.5, Sonnet 4.6+, GPT-5.4+) respect the workflow
+**The issue:** PM Brain relies on **instruction-following** and **nuanced routing** (product_sense vs execution_mode). Weaker models don't follow the golden rule; they skip braindump and jump to templates. Better models respect the workflow.
 
 **Model Tier List:**
 - Excellent: Claude Haiku 4.5, Claude Sonnet 4.6+, Claude Opus 4.6+, GPT-5.4+, 

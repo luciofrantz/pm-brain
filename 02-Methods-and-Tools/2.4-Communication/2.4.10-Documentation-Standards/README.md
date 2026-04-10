@@ -1,5 +1,7 @@
 # Documentation Standards Framework
 
+## Introduction
+
 Documentation is not one thing. A how-to guide for a helpdesk agent, an architecture decision record for engineering, and a product decision rationale for Confluence are three fundamentally different products serving different audiences with different jobs-to-be-done. Most teams treat "documentation" as a monolith, which is exactly why it goes stale, nobody reads it, and AI tools can't make sense of it.
 
 This framework helps you recognize the different types of documentation, choose the right one, and produce docs that are useful for both humans today AND AI agents tomorrow.
@@ -17,9 +19,9 @@ This framework helps you recognize the different types of documentation, choose 
 
 ### 1. Read the Golden Rule
 
-See: [`/PRODUCT-SENSE-RULES.md`](../../../PRODUCT-SENSE-RULES.md)
+**See:** [`/PRODUCT-SENSE-RULES.md`](../../../PRODUCT-SENSE-RULES.md)
 
-### 2. Think First (5–10 min)
+### 2. Braindump First (5–10 min)
 
 Use the prompts: [`2-product-sense-prompts.md`](../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/2-product-sense-prompts.md) — "Always-Ask Core Prompts" and the situation-specific sections.
 Or start from the entry point: [`0-start-here-product-thinking.md`](../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md).
@@ -34,7 +36,7 @@ Before you write, answer these questions honestly:
 
 **Documentation structures the knowledge — it doesn't create it.** If you don't have clarity on what you're capturing, no template will save you.
 
-### 3. Then Use the Templates
+### 3. Then Use This Framework
 
 After you've answered the questions above, pick the right template based on your documentation type (see taxonomy in `1-documentation-standards-framework.md`).
 
@@ -81,8 +83,8 @@ Every doc needs an owner and a next-review date. No exceptions. Stale docs are w
 
 | Type | Primary Audience | Job-to-be-Done | Template |
 |------|-----------------|-----------------|----------|
-| **Decision Record** | Product team, future PMs, stakeholders | Understand why we chose X | `2-decision-record-template.md` |
-| **Architecture / Technical** | Engineering, tech leads, on-call | Understand how the system works | `3-architecture-technical-template.md` |
+| **Decision Record** | Product team, future PMs, stakeholders | Understand why we chose X | [2-decision-record-template.md](2-decision-record-template.md) |
+| **Architecture / Technical** | Engineering, tech leads, on-call | Understand how the system works | [3-architecture-technical-template.md](3-architecture-technical-template.md) |
 | **How-to / Procedural** | End users, helpdesk, support agents | Complete a specific task | *(future — build when user feedback patterns emerge)* |
 | **Troubleshooting** | Support, engineering | Diagnose and fix a problem | *(future)* |
 | **Onboarding / Conceptual** | New hires, cross-team | Understand what something is and why it exists | *(future)* |
@@ -96,10 +98,10 @@ Every doc needs an owner and a next-review date. No exceptions. Stale docs are w
 
 ## Links
 
-- Documentation Standards Framework: `1-documentation-standards-framework.md`
-- Decision Record Template: `2-decision-record-template.md`
-- Architecture/Technical Template: `3-architecture-technical-template.md`
-- Documentation Evaluation: `4-documentation-standards-evaluation.md`
-- One-Pagers (for communicating decisions): `../2.4.3-One-Pagers/README.md`
-- PRD (for detailed requirements): `../../2.3-Execution/2.3.4-PRD/README.md`
-- Product Sense (braindump first): `../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md`
+- [Documentation Standards Framework](1-documentation-standards-framework.md)
+- [Decision Record Template](2-decision-record-template.md)
+- [Architecture/Technical Template](3-architecture-technical-template.md)
+- [Documentation Evaluation](4-documentation-standards-evaluation.md)
+- [One-Pagers](../2.4.3-One-Pagers/README.md) — for communicating decisions
+- [PRD Framework](../../2.3-Execution/2.3.4-PRD/README.md) — for detailed requirements
+- [Product Sense](../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md) — braindump first

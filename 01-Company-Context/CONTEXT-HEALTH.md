@@ -14,31 +14,33 @@ The table below is the **freshness index** for context docs that act as living i
 - **Role**: How this doc is used in practice (source of truth vs. historical reference).
 - **Review cadence**: How often you *roughly* want to sanity-check it (quarterly, per initiative, on major org change, etc.).
 - **Rot risk**: Gut feel about how quickly this goes stale (`low` / `medium` / `high`).
+- **Maintained?**: `Maintained` (PM actively owns and updates), `Reference` (background context; agent reads but should not suggest updating), or `External` (managed outside PM Brain).
 - **Last reviewed**: Optional free-form date/note; update only when you do a *meaningful* review.
 
 #### Core company context
 
-| Doc path | Role | Review cadence | Rot risk | Last reviewed |
-|---------|------|----------------|----------|---------------|
-| `01-Company-Context/1-company-vision.md` | Company mission & vision (directional north star) | Yearly or on major strategy shift | medium | - |
-| `01-Company-Context/2-company-strategy.md` | Current strategy & priorities (inputs to OKRs, roadmaps) | Quarterly planning cycle | high | - |
-| `01-Company-Context/5-company-roadmap.md` | Company-wide roadmap used in PM artifacts | Quarterly planning cycle | high | - |
-| `01-Company-Context/6-company-stakeholders.md` | Canonical stakeholder directory for PM work | On major org change | high | - |
+| Doc path | Role | Review cadence | Rot risk | Maintained? | Last reviewed |
+|---------|------|----------------|----------|-------------|---------------|
+| `01-Company-Context/1-company-vision.md` | Company mission & vision | Yearly or on major strategy shift | medium | Reference | - |
+| `01-Company-Context/2-company-strategy.md` | Strategy & priorities (inputs to OKRs, roadmaps) | Quarterly planning cycle | high | Reference | - |
+| `01-Company-Context/3-company-product-principles.md` | Product principles | On major strategy shift | low | Reference | - |
+| `01-Company-Context/4-company-product-explanation.md` | Product portfolio for PM's team | After significant product changes | high | Maintained | - |
+| `01-Company-Context/5-company-roadmap.md` | Company-wide roadmap | Quarterly planning cycle | high | External | - |
+| `01-Company-Context/6-company-stakeholders.md` | Stakeholder directory | On major org change | medium | Reference | - |
 
 #### Politics & stakeholders
 
-| Doc path | Role | Review cadence | Rot risk | Last reviewed |
-|---------|------|----------------|----------|---------------|
-| `01-Company-Context/1.1-Stakeholder-Avatars/README.md` | Index + guidance for stakeholder avatars used in politics checks | When adding/removing key stakeholders | medium | - |
-| `01-Company-Context/1.1-Stakeholder-Avatars/0-example-director-engineering.md` | Example / seed avatar; adapt or replace with real cast | When real avatars are added | medium | - |
-| `01-Company-Context/1.2-Organization-Survival/1-power-map.md` | Power map used in organization-survival / politics flows | On major re-orgs or leadership changes | high | - |
-| `01-Company-Context/1.2-Organization-Survival/2-political-landscape.md` | Political landscape summary used for politics-coach flows | On major re-orgs or leadership changes | high | - |
+| Doc path | Role | Review cadence | Rot risk | Maintained? | Last reviewed |
+|---------|------|----------------|----------|-------------|---------------|
+| `01-Company-Context/1.1-Stakeholder-Avatars/` | Stakeholder avatars (one file per person) | When key stakeholders change role or stance | high | Maintained | - |
+| `01-Company-Context/1.2-Organization-Survival/1-power-map.md` | Power map for politics/org-survival flows | On major re-orgs or leadership changes | high | Reference | - |
+| `01-Company-Context/1.2-Organization-Survival/2-political-landscape.md` | Political landscape summary for politics-coach flows | On major re-orgs or leadership changes | high | Reference | - |
 
 #### Initiatives
 
-| Doc path | Role | Review cadence | Rot risk | Last reviewed |
-|---------|------|----------------|----------|---------------|
-| `04-Initiatives/4.1-Initiative-Codename/roadmap.md` | Example initiative roadmap used in initiative-level planning | Per initiative planning cycle | medium | - |
+| Doc path | Role | Review cadence | Rot risk | Maintained? | Last reviewed |
+|---------|------|----------------|----------|-------------|---------------|
+| `04-Initiatives/4.1-Initiative-Codename/` | Example: active initiative | Per sprint/cycle | high | Maintained | - |
 
 ---
 
@@ -53,6 +55,7 @@ Ground rules for these reminders:
 - Keep it **short and optional**.
 - Offer clear escapes like: “quick sense-check now”, “assume roughly true and continue”, or “treat as historical for this session”.
 - **Only** nudge when the doc is feeding into a real decision or artifact (roadmaps, OKRs, strategy docs, PRDs, initiative decisions, politics checks), not just casual browsing.
+- **When a doc is `Reference` or `External`:** do NOT suggest updating it, regardless of what the conversation surfaces. Route new findings and learnings to initiative context (`04-Initiatives/`) instead. Only offer to promote to company context if the finding has clear cross-cutting significance across multiple initiatives.
 
 You can extend this file over time with more rows or adjust cadences/risks as you see what actually rots.
 
