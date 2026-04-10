@@ -1,4 +1,4 @@
-# Documentation Standards
+# Documentation Standards Framework
 
 ## For Agents: When to Suggest This Framework
 
@@ -35,20 +35,31 @@ The core insight is simple: **there is no such thing as "documentation."** There
 
 ---
 
+## Step 0: Braindump First (Do this first!)
+
+**Use prompts from:** [2-product-sense-prompts.md](../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/2-product-sense-prompts.md) — "Always-Ask Core Prompts" section. Quick start: Who actually needs this doc, and what job does it do for them? What happens when this information changes? Should an AI agent be able to reason over this? **See prompts file for full list.**
+
+**Documentation structures the knowledge — it doesn't create it.** If you don't have clarity on what you're capturing, no template will save you.
+
+---
+
 ## Core Philosophy
 
-### What This Is NOT
+### Documentation Standards are NOT a "Write More Docs" Initiative
 
-- **Not a "write more docs" initiative.** More docs ≠ better docs. We'd rather have 10 high-quality, maintained docs than 100 stale ones.
-- **Not a Confluence style guide.** This is platform-agnostic. The templates work in Confluence, Notion, markdown repos, or whatever comes next.
-- **Not a replacement for thinking.** A perfectly formatted decision record with shallow reasoning is still a bad doc.
+More docs ≠ better docs. Every doc you create is a commitment to keep it current. Good documentation practice should:
 
-### What This IS
+- **Quality over quantity** — 10 well-maintained docs beat 100 stale ones every time.
+- **Thinking over formatting** — A perfectly formatted decision record with shallow reasoning is still a bad doc. Templates structure knowledge; they don't create it.
+- **Platform-agnostic over tool-specific** — These templates work in Confluence, Notion, markdown repos, or whatever comes next. This isn't a Confluence style guide.
+- **Taxonomy over monolith** — Name the doc type before you write. If you can't, you haven't thought it through.
 
-- **A taxonomy** that helps teams recognize which kind of documentation they're actually creating.
-- **A metadata standard** that makes docs findable by humans AND machines.
-- **A set of templates** that lower the activation energy for creating good docs.
-- **A quality bar** that tells you when a doc is done and when it needs work.
+This framework gives you:
+
+- **A taxonomy** — Recognize which kind of documentation you're actually creating.
+- **A metadata standard** — Make docs findable by humans AND machines.
+- **A set of templates** — Lower the activation energy for creating good docs.
+- **A quality bar** — Know when a doc is done and when it needs work.
 
 ---
 
@@ -179,11 +190,11 @@ Be honest with yourself. A metadata standard that requires updating 12 fields on
 
 ### The Default: English
 
-New documentation should default to English unless there's a specific reason to use Danish. The reasons:
+New documentation should default to English unless there's a specific reason to use Danish.
 
-1. **AI reasoning quality.** Every major LLM in 2026-2027 understands, retrieves, and reasons over English significantly better than Danish. This isn't just about translation — it's about the quality of search, summarization, and cross-referencing that AI agents can perform.
-2. **Future-proofing.** As teams grow, as tools evolve, as AI agents become primary consumers of docs alongside humans — English is the lingua franca.
-3. **Cross-team readability.** External partners, international colleagues, and tools all work better with English.
+- **AI reasoning quality.** Every major AI tool in 2026-2027 understands, retrieves, and reasons over English significantly better than Danish. This isn't just about translation — it's about the quality of search, summarization, and cross-referencing.
+- **Future-proofing.** As teams grow and AI agents become primary consumers of docs alongside humans, English is the lingua franca.
+- **Cross-team readability.** External partners, international colleagues, and tools all work better with English.
 
 ### When Danish Makes Sense
 
@@ -209,29 +220,29 @@ If the doc is primarily consumed by Danish-speaking humans doing a specific task
 
 These are the design principles that make documentation useful for AI agents — not just as a nice-to-have, but as the primary optimization target for 2027 and beyond.
 
-### 1. Structured Over Narrative
+**Structured over narrative:**
+- AI agents parse sections, headers, and metadata far better than long prose. Use clear headers (`##`, `###`), short paragraphs, and structured metadata.
+- This doesn't mean "no prose" — it means structure your prose.
 
-AI agents parse sections, headers, and metadata far better than long narrative prose. Use clear headers (`##`, `###`), short paragraphs, and structured metadata. This doesn't mean "no prose" — it means structure your prose.
+**Explicit context over assumed context:**
+- Humans can infer "this doc is about the payments system" from a Confluence page tree location. AI agents can't — or at least, they're bad at it.
+- Put the context IN the doc: what system, what team, what time period.
 
-### 2. Explicit Context Over Assumed Context
+**Semantic metadata over folder structure:**
+- Folder structure helps humans navigate. Tags, doc-type, and audience fields help machines filter.
+- Both matter, but if you have to choose, metadata is more portable and more queryable.
 
-Humans can infer "this doc is about the payments system" from a Confluence page tree location. AI agents can't — or at least, they're bad at it. Put the context IN the doc: what system, what team, what time period.
+**Linked knowledge over duplicated knowledge:**
+- Don't copy information from one doc to another. Link to it. Duplication is the #1 cause of contradictory docs.
+- When an AI agent encounters two docs that say different things, it can't know which is correct. When one links to the other as the source of truth, the AI can follow the chain.
 
-### 3. Semantic Metadata Over Folder Structure
+**Versioned over edited-in-place:**
+- For decision records: never edit a past decision. Mark it superseded and create a new one. This preserves the decision trail.
+- For living documents (architecture): edit in place, but update the `last-reviewed` date.
 
-Folder structure helps humans navigate. Tags, doc-type, and audience fields help machines filter. Both matter, but if you have to choose, metadata is more portable and more queryable.
-
-### 4. Linked Knowledge Over Duplicated Knowledge
-
-Don't copy information from one doc to another. Link to it. Duplication is the #1 cause of contradictory docs. When an AI agent encounters two docs that say different things, it can't know which is correct. When one doc links to another as the source of truth, the AI can follow the chain.
-
-### 5. Versioned Over Edited-in-Place
-
-For decision records: never edit a past decision. Mark it superseded and create a new one. This preserves the decision trail. For living documents (architecture): edit in place, but update the `last-reviewed` date.
-
-### 6. Machine-Readable Dates and Status
-
-Use ISO 8601 dates (`YYYY-MM-DD`), not "last Tuesday" or "Q1 2026." Use explicit status values from the enum (`draft | review | approved | current | superseded | archived`), not "this is probably still accurate."
+**Machine-readable dates and status:**
+- Use ISO 8601 dates (`YYYY-MM-DD`), not "last Tuesday" or "Q1 2026."
+- Use explicit status values from the enum (`draft | review | approved | current | superseded | archived`), not "this is probably still accurate."
 
 ---
 
@@ -330,7 +341,7 @@ Use ISO 8601 dates (`YYYY-MM-DD`), not "last Tuesday" or "Q1 2026." Use explicit
 
 ## Best Practices
 
-**Do:**
+### Do's
 - Name the doc type before you start writing
 - Fill in the metadata header first — it forces you to think about audience, ownership, and lifecycle
 - Default to English for new documentation
@@ -338,7 +349,7 @@ Use ISO 8601 dates (`YYYY-MM-DD`), not "last Tuesday" or "Q1 2026." Use explicit
 - Set a review date and actually review when it arrives
 - Archive docs that are no longer relevant (don't delete — archive)
 
-**Don't:**
+### Don'ts
 - Treat documentation as a one-time project ("let's document everything this sprint")
 - Skip the metadata header because "it's just a quick doc"
 - Write for an imaginary audience — be specific about who reads this
@@ -347,7 +358,7 @@ Use ISO 8601 dates (`YYYY-MM-DD`), not "last Tuesday" or "Q1 2026." Use explicit
 
 ---
 
-## LLM Helper Prompts
+## AI Collaboration Prompts
 
 Reusable prompts for AI-assisted documentation work. Copy-paste these into your AI tool.
 
@@ -407,7 +418,7 @@ knowledge worth capturing separately.
 
 ## Integration with Other Frameworks
 
-| When you're doing this… | …this framework helps with |
+| When you're doing this | How this framework helps |
 |------------------------|---------------------------|
 | Making a product decision | **Decision Record** captures the decision, alternatives, and rationale |
 | Onboarding a new engineer | **Architecture/Technical** docs give them system context |
@@ -420,10 +431,10 @@ knowledge worth capturing separately.
 
 ## References
 
-- Decision Record Template: `2-decision-record-template.md`
-- Architecture/Technical Template: `3-architecture-technical-template.md`
-- Documentation Evaluation: `4-documentation-standards-evaluation.md`
-- One-Pagers: `../2.4.3-One-Pagers/README.md`
-- PRD Framework: `../../2.3-Execution/2.3.4-PRD/README.md`
-- Product Sense Entry: `../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md`
-- Foundations: `../../2.0-Foundations/README.md`
+- [Decision Record Template](2-decision-record-template.md)
+- [Architecture/Technical Template](3-architecture-technical-template.md)
+- [Documentation Evaluation](4-documentation-standards-evaluation.md)
+- [One-Pagers](../2.4.3-One-Pagers/README.md)
+- [PRD Framework](../../2.3-Execution/2.3.4-PRD/README.md)
+- [Product Sense Entry](../../2.0-Foundations/2.0.1-Mental-Models/6-Product-Sense-Development/0-start-here-product-thinking.md)
+- [Foundations](../../2.0-Foundations/README.md)

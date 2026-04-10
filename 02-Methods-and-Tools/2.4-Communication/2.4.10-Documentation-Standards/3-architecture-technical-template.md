@@ -164,7 +164,7 @@ link and provide a one-line summary.]
 
 ---
 
-## Usage Notes
+## How to Use This Template
 
 ### Living Doc Maintenance
 
@@ -177,11 +177,11 @@ Practical tips:
 
 ### On Diagrams
 
-Diagrams are valuable but insufficient alone. Always pair a diagram with a text description that covers the same information. Reasons:
+Diagrams are valuable but insufficient alone. Always pair a diagram with a text description that covers the same information.
 
-1. **AI agents can't read diagrams.** They can read text descriptions.
-2. **Diagrams go stale.** Updating a Mermaid/draw.io diagram has higher friction than updating text.
-3. **Accessibility.** Not everyone can view images in every context.
+- **AI agents can't read diagrams.** They can read text descriptions.
+- **Diagrams go stale.** Updating a Mermaid/draw.io diagram has higher friction than updating text.
+- **Accessibility.** Not everyone can view images in every context.
 
 If you use Mermaid, Markdown-rendered diagrams, or ASCII art — those are better than image files because they're version-controlled, diff-able, and text-searchable.
 

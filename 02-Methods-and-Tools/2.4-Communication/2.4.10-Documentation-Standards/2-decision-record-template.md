@@ -111,7 +111,7 @@ Be honest — every decision has downsides.]
 
 ---
 
-## Usage Notes
+## How to Use This Template
 
 ### Numbering Convention
 
@@ -136,10 +136,10 @@ If your team prefers a different prefix (e.g., `ADR-` for Architecture Decision 
 
 Detailed enough that a reader can understand WHY they were rejected. One sentence per alternative is too little. A full page per alternative is too much. 3-5 bullet points covering pros, cons, and rejection reason is the sweet spot.
 
-### The "If You Only Considered One Option" Test
+### When You Only Considered One Option
 
 If there are no alternatives in your decision record, either:
-1. You didn't consider alternatives (bad — go back and think about this)
-2. There genuinely was only one viable option (rare, but it happens — document why)
+- You didn't consider alternatives (bad — go back and think about this)
+- There genuinely was only one viable option (rare, but it happens — document why)
 
 Either way, the absence of alternatives is worth noting.

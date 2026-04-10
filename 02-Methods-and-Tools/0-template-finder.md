@@ -17,6 +17,7 @@ Pick one and open the README + template in that folder. Paths are relative to `0
 | **One-pager** | [2.4-Communication/2.4.3-One-Pagers/](2.4-Communication/2.4.3-One-Pagers/) — README, then 2-one-pager-templates.md |
 | **Meeting agenda** | [2.4-Communication/2.4.2-Meeting-Agendas/](2.4-Communication/2.4.2-Meeting-Agendas/) — README, then 2-meeting-agendas-templates.md |
 | **Newsletter / stakeholder update** | [2.4-Communication/2.4.1-Newsletter/](2.4-Communication/2.4.1-Newsletter/) — README, then 2-newsletter-template.md |
+| **Sprint summary** (async sprint transition brief) | [2.4-Communication/2.4.11-Sprint-Summary/](2.4-Communication/2.4.11-Sprint-Summary/) — README, then 2-sprint-summary-template.md |
 | **Crisis communication** | [2.4-Communication/2.4.4-Crisis-Management/](2.4-Communication/2.4.4-Crisis-Management/) — README, then 2-crisis-management-templates.md |
 | **Personas** | [2.3-Execution/2.3.5-Personas/](2.3-Execution/2.3.5-Personas/) — README, then 2-personas-template.md |
 | **Segment definition** | [2.2-Discovery/2.2.7-Segmentation/](2.2-Discovery/2.2.7-Segmentation/) — README, then 2-segment-definition-template.md |

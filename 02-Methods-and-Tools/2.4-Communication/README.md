@@ -49,6 +49,8 @@ After your braindump, use the frameworks below to structure your communication.
 
 - `2.4.10-Documentation-Standards/` — Documentation taxonomy, metadata standards, and templates for decision records and architecture docs. Designed for AI-readiness in 2027. **Use when:** You need to create documentation that serves a specific audience, follows team standards, and is optimized for both humans and AI agents.
 
+- `2.4.11-Sprint-Summary/` — Async sprint transition brief for stakeholders and team. Covers last sprint goal, what was delivered, new sprint goal, and expected outcomes. **Use when:** Sprint closes and you need to communicate what happened and what's next — to delivery leads, execs, and the team simultaneously.
+
 ## Typical flows
 
 ```
@@ -75,6 +77,7 @@ Courses (for training and enablement)
 | Documenting a decision | `2.4.10-Documentation-Standards/` | Decision record with alternatives, rationale, consequences |
 | Documenting system architecture | `2.4.10-Documentation-Standards/` | Technical overview with components, data flow, operational context |
 | Setting documentation standards | `2.4.10-Documentation-Standards/` | Taxonomy, metadata, AI-readiness principles |
+| Sprint transition update to stakeholders + team | `2.4.11-Sprint-Summary/` | Async brief: last sprint close + new sprint kick-off |
 
 ## Related domains / cross-links
 

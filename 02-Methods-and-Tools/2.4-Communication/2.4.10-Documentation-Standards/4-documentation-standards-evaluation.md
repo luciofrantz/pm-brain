@@ -28,11 +28,11 @@ When helping a user evaluate documentation:
 2. Help the user THINK about their documentation quality — don't just score it for them
 3. Ask clarifying questions if the doc's purpose or audience isn't clear
 4. Reference `1-documentation-standards-framework.md` for taxonomy and principles
-5. Output format: use the scoring template provided in Step 2
+5. Output format: use the scoring template provided in STEP 2
 
 ---
 
-## STEP 0: GUT CHECK & DOC SENSE (Do this first!)
+## STEP 0: PRODUCT SENSE & GUT CHECK (Do this first!)
 
 *5 minutes. Before structured evaluation.*
 
